@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard de Controle de Estoque</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" type="text/css" href="style.css" media="screen" />
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  
+</head>
+
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Controle de Estoque</a>
+    </div>
+  </nav>
+
+  <!-- Menu Lateral -->
+  <div class="sidebar">
+    <a href="#">Dashboard</a>
+    <a href="#">Gráficos</a>
+    <a href="#">Produtos</a>
+    <a href="#">Relatórios</a>
+    <a href="#">Configurações</a>
+  </div>
+
+  <!-- Conteúdo Principal -->
+  <div class="content">
+    <!-- Tela de Gráficos -->
+    <div class="chart-container">
+      <h4>Gráficos</h4>
+      <p>Aqui você pode adicionar gráficos para visualizar os dados do estoque.</p>
+      <!-- Exemplo de gráfico (substituir com gráficos reais) -->
+      <div id="chart" style="height: 300px; background-color: #f8f9fa; border-radius: 8px;">
+        Gráfico de Estoque
+      </div>
+    </div>
+
+    <!-- Tela de Produtos -->
+    <div class="product-table-container">
+      <h3>Produtos Cadastrados</h3>
+      <div class="mb-3">
+        <label for="searchInput" class="form-label">Pesquisar por Nome do Produto</label>
+        <input type="text" class="form-control" id="searchInput" placeholder="Digite o nome do produto">
+      </div>
+      <table id="productTable" class="table table-dark table-striped">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Descrição</th>
+            <th>Preço</th>
+            <th>Quantidade</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Dados dos produtos serão carregados aqui -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Modal de Edição -->
+  <div class="modal fade" id="editProductModal" tabindex="-1" aria-labelledby="editProductModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editProductModalLabel">Editar Produto</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="editProductForm">
+            <input type="hidden" id="editProductId">
+            <div class="mb-3">
+              <label for="editProductName" class="form-label">Nome do Produto</label>
+              <input type="text" class="form-control" id="editProductName" required>
+            </div>
+            <div class="mb-3">
+              <label for="editProductDescription" class="form-label">Descrição</label>
+              <textarea class="form-control" id="editProductDescription" rows="3" required></textarea>
+            </div>
+            <div class="mb-3">
+              <label for="editProductPrice" class="form-label">Preço</label>
+              <input type="number" class="form-control" id="editProductPrice" step="0.01" required>
+            </div>            
+            <div class="mb-3">
+              <label for="editProductQuantity" class="form-label">Quantidade em Estoque</label>
+              <input type="number" class="form-control" id="editProductQuantity" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Salvar</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <p>&copy; 2024 Controle de Estoque | Todos os direitos reservados.</p>
+  </div>
+
+  <script>
+    $(document).ready(function () {
+      // Carregar produtos inicialmente
+      loadProducts();
+
+      // Atualizar tabela ao digitar na barra de pesquisa
+      $('#searchInput').on('input', function () {
+        const searchValue = $(this).val();
+        loadProducts(searchValue);
+      });
+
+      // Carregar lista de produtos
+      function loadProducts(searchValue = '') {
+        $.ajax({
+          url: `http://localhost:3000/api/produtos?search=${encodeURIComponent(searchValue)}`,
+          type: "GET",
+          success: function (produtos) {
+            let rows = '';
+            produtos.forEach(produto => {
+              let alert = '';
+              if (produto.quantidade_estoque <= 20) {
+                alert = `<span class="text-warning">Estoque baixo</span>`;
+              }
+              rows += `<tr>
+                <td>${produto.id_produto}</td>
+                <td>${produto.nome_produto}</td>
+                <td>${produto.descricao}</td>
+                <td>${produto.preco}</td>
+                <td>${produto.quantidade_estoque} ${alert}</td>
+                <td>
+                  <button class="btn btn-warning btn-sm editBtn" data-id="${produto.id_produto}">Editar</button>
+                  <button class="btn btn-danger btn-sm deleteBtn" data-id="${produto.id_produto}">Excluir</button>
+                </td>
+              </tr>`;
+            });
+
+            $('#productTable tbody').html(rows);
+          },
+          error: function () {
+            console.error("Erro ao carregar produtos.");
+          }
+        });
+      }
+
+      // Abrir modal para edição
+      $(document).on('click', '.editBtn', function () {
+        const productId = $(this).data('id');
+        $.ajax({
+          url: `http://localhost:3000/api/produto/${productId}`,
+          type: "GET",
+          success: function (produto) {
+            $('#editProductId').val(produto.id_produto);
+            $('#editProductName').val(produto.nome_produto);
+            $('#editProductDescription').val(produto.descricao);
+            $('#editProductPrice').val(produto.preco);
+            $('#editProductQuantity').val(produto.quantidade_estoque);
+            $('#editProductModal').modal('show');
+          },
+          error: function () {
+            console.error("Erro ao carregar os dados do produto.");
+          }
+        });
+      });
+
+      // Enviar atualização de produto
+      $('#editProductForm').submit(function (e) {
+        e.preventDefault();
+
+        const productId = $('#editProductId').val();
+        const productName = $('#editProductName').val();
+        const productDescription = $('#editProductDescription').val();
+        const productPrice = $('#editProductPrice').val();
+        const productQuantity = $('#editProductQuantity').val();
+
+        $.ajax({
+          url: `http://localhost:3000/api/produto/${productId}`,
+          type: 'PUT',
+          contentType: 'application/json',
+          data: JSON.stringify({
+            nome_produto: productName,
+            descricao: productDescription,
+            preco: productPrice,
+            quantidade_estoque: productQuantity
+          }),
+          success: function () {
+            alert('Produto atualizado com sucesso!');
+            $('#editProductModal').modal('hide');
+            loadProducts(); // Atualiza a lista de produtos
+          },
+          error: function () {
+            alert('Erro ao atualizar o produto.');
+          }
+        });
+      });
+
+      // Excluir produto
+      $(document).on('click', '.deleteBtn', function () {
+        const productId = $(this).data('id');
+
+        if (confirm('Você tem certeza que deseja excluir este produto?')) {
+          $.ajax({
+            url: `http://localhost:3000/api/produto/${productId}`,
+            type: 'DELETE',
+            success: function () {
+              alert('Produto excluído com sucesso!');
+              loadProducts(); // Atualiza a lista de produtos
+            },
+            error: function () {
+              alert('Erro ao excluir o produto.');
+            }
+          });
+        }
+      });
+    });
+  </script>
+</body>
+
+</html>
