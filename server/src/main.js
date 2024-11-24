@@ -1,5 +1,5 @@
 import { productRouter } from './scripts/product.js';
-import { createdRouter } from './scripts/created.js';
+
 import express from 'express';
 import cors from 'cors';
 

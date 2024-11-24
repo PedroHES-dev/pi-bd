@@ -1,0 +1,28 @@
+body {
+    padding-top: 4rem; /* Garante que o conteúdo não fique atrás da navbar */
+}
+
+.min-h-screen {
+    min-height: 100vh;
+}
+
+.bg-cover {
+    z-index: -1; /* Coloca a imagem de fundo atrás do conteúdo */
+}
+
+.login-container {
+    z-index: 10; /* Garantir que o formulário de login fique em cima da imagem de fundo */
+}
+
+.image-left {
+    max-width: 100%; /* Garante que a imagem à esquerda ocupe o tamanho máximo possível */
+    object-fit: cover; /* Mantém a proporção da imagem */
+}
+
+.login-form-container {
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-left: 2rem; /* Ajuste da margem */
+}
