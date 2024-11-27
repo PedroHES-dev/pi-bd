@@ -39,7 +39,7 @@
         <!-- Gráficos -->
         <li class="flex items-center space-x-3">
           <span class="material-icons">bar_chart</span>
-          <a href="#" class="block hover:text-gray-300">Gráficos</a>
+          <a href="../graph/graph.html" class="block hover:text-gray-300">Gráficos</a>
         </li>
         <!-- Relatórios -->
         <li class="flex items-center space-x-3">
@@ -54,7 +54,7 @@
         <!-- Sair -->
         <li class="absolute bottom-5 flex items-center space-x-3">
           <span class="material-icons">logout</span>
-          <a href="#" class="block hover:text-gray-300">Sair</a>
+          <a href="../login/login.html" class="block hover:text-gray-300">Sair</a>
         </li>
       </ul>
     </aside>
@@ -63,47 +63,60 @@
     <main class="flex-grow sm:ml-64 bg-gray-100 pb-16 overflow-y-auto">
       <section class="p-6">
         <!-- Cadastrar Produto -->
-        <section class="p-6 bg-white shadow-md rounded-lg mx-4 mt-6">
-          <h2 class="text-2xl font-bold mb-4">Cadastrar Produto</h2>
-          <form id="productForm" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-6">
+        <section class="p-6 bg-white shadow-lg rounded-lg mx-4 mt-6 border border-gray-300">
+          <h2 class="text-2xl font-bold mb-4 text-gray-700 border-b-2 border-primary pb-2">Cadastrar Produto</h2>
+          <form id="productForm" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-6">
+            <!-- Imagem -->
             <div>
-              <label for="image" class="block text-sm font-medium text-gray-700">Imagem</label>
-              <input type="file" id="image"
-                class="mt-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary bg-gray-100">
+              <label for="image" class="block text-sm font-semibold text-gray-600">Imagem</label>
+              <input type="file" id="image" name="imagem"
+                class="mt-2 block w-full rounded-md border border-gray-300 shadow focus:ring-primary focus:border-primary bg-gray-50 p-2">
             </div>
+
+            <!-- Nome do Produto -->
             <div>
-              <label for="name" class="block text-sm font-medium text-gray-700">Nome do Produto</label>
-              <input type="text" id="name"
-                class="mt-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary bg-gray-100">
+              <label for="nome_produto" class="block text-sm font-semibold text-gray-600">Nome do Produto</label>
+              <input type="text" id="nome_produto" name="nome_produto"
+                class="mt-2 block w-full rounded-md border border-gray-300 shadow focus:ring-primary focus:border-primary bg-gray-50 p-2">
             </div>
+
+            <!-- Descrição -->
             <div>
-              <label for="description" class="block text-sm font-medium text-gray-700">Descrição</label>
-              <input type="text" id="description"
-                class="mt-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary bg-gray-100">
+              <label for="descricao" class="block text-sm font-semibold text-gray-600">Descrição</label>
+              <input type="text" id="descricao" name="descricao"
+                class="mt-2 block w-full rounded-md border border-gray-300 shadow focus:ring-primary focus:border-primary bg-gray-50 p-2">
             </div>
+
+            <!-- Preço -->
             <div>
-              <label for="price" class="block text-sm font-medium text-gray-700">Preço</label>
-              <input type="number" id="price"
-                class="mt-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary bg-gray-100">
+              <label for="preco" class="block text-sm font-semibold text-gray-600">Preço</label>
+              <input type="number" id="preco" name="preco"
+                class="mt-2 block w-full rounded-md border border-gray-300 shadow focus:ring-primary focus:border-primary bg-gray-50 p-2">
             </div>
+
+            <!-- Quantidade -->
             <div>
-              <label for="quantity" class="block text-sm font-medium text-gray-700">Quantidade</label>
-              <input type="number" id="quantity"
-                class="mt-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary bg-gray-100">
+              <label for="quantidade_estoque" class="block text-sm font-semibold text-gray-600">Quantidade</label>
+              <input type="number" id="quantidade_estoque" name="quantidade_estoque"
+                class="mt-2 block w-full rounded-md border border-gray-300 shadow focus:ring-primary focus:border-primary bg-gray-50 p-2">
             </div>
+
+            <!-- Fornecedor -->
             <div>
-              <label for="category" class="block text-sm font-medium text-gray-700">Fornecedor</label>
-              <select id="category"
-                class="mt-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary bg-gray-100">
-                <option value="Categoria 1">Categoria 1</option>
-                <option value="Categoria 2">Categoria 2</option>
-                <option value="Categoria 3">Categoria 3</option>
-                <option value="Categoria 4">Categoria 4</option>
+              <label for="id_fornecedor" class="block text-sm font-semibold text-gray-600">Fornecedor</label>
+              <select id="id_fornecedor" name="id_fornecedor"
+                class="mt-2 block w-full rounded-md border border-gray-300 shadow focus:ring-primary focus:border-primary bg-gray-50 p-2">
+                <!-- Fornecedores carregados dinamicamente -->
               </select>
             </div>
           </form>
+
+          <!-- Botão de Cadastro -->
           <div class="flex justify-end">
-            <button class="bg-primary text-white px-4 py-2 rounded hover:bg-primary/90">Cadastrar Produto</button>
+            <button id="btnCadastro"
+              class="bg-blue-600 text-white px-6 py-2 rounded-lg shadow hover:bg-blue-700 transition">
+              Cadastrar Produto
+            </button>
           </div>
         </section>
 
@@ -120,22 +133,24 @@
 
           <!-- Tabela (Desktop) -->
           <div class="hidden sm:block">
-            <table class="table-auto w-full bg-white shadow-md rounded-lg">
-              <thead class="bg-secondary text-white">
-                <tr>
-                  <th class="px-4 py-2">ID</th>
-                  <th class="px-4 py-2">Nome</th>
-                  <th class="px-4 py-2">Descrição</th>
-                  <th class="px-4 py-2">Preço</th>
-                  <th class="px-4 py-2">Quantidade</th>
-                  <th class="px-4 py-2">Ações</th>
+            <table class="table-auto w-full bg-white shadow-lg rounded-lg overflow-hidden border border-gray-200">
+              <thead class="bg-gradient-to-r from-blue-500 to-blue-600 text-white">
+                <tr class="text-left">
+                  <th class="px-6 py-3 text-sm font-semibold">Imagem</th>
+                  <th class="px-6 py-3 text-sm font-semibold">ID</th>
+                  <th class="px-6 py-3 text-sm font-semibold">Nome</th>
+                  <th class="px-6 py-3 text-sm font-semibold">Descrição</th>
+                  <th class="px-6 py-3 text-sm font-semibold">Preço</th>
+                  <th class="px-6 py-3 text-sm font-semibold">Quantidade</th>
+                  <th class="px-6 py-3 text-sm font-semibold text-center">Ações</th>
                 </tr>
               </thead>
-              <tbody id="productTableBody" class="text-gray-700">
+              <tbody id="productTableBody" class="divide-y divide-gray-200">
                 <!-- Dados dos produtos serão carregados aqui -->
               </tbody>
             </table>
           </div>
+
 
           <!-- Lista Responsiva (Mobile) -->
           <div id="responsiveProductList" class="block sm:hidden space-y-4">
@@ -163,7 +178,7 @@
       <span class="material-icons">settings</span>
       <span class="text-xs">Configurações</span>
     </a>
-    <a href="#" class="flex flex-col items-center hover:text-gray-300">
+    <a href="../login/login.html" class="flex flex-col items-center hover:text-gray-300">
       <span class="material-icons">logout</span>
       <span class="text-xs">sair</span>
     </a>
@@ -178,258 +193,357 @@
         <span class="material-icons">close</span>
       </button>
 
-      <!-- Cabeçalho -->
-      <h2 class="text-2xl font-extrabold text-gray-700 mb-6 border-b pb-2">Editar Produto</h2>
+      <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white rounded-lg shadow-xl max-w-4xl w-full p-6 sm:p-8 overflow-hidden">
+          <!-- Cabeçalho -->
+          <h2 class="text-2xl font-extrabold text-gray-700 mb-6 border-b pb-2">Editar Produto</h2>
 
-      <!-- Formulário -->
-      <form id="editProductForm">
-        <input type="hidden" id="editProductId">
+          <!-- Conteúdo Principal -->
+          <div class="flex flex-col sm:flex-row sm:space-x-6">
+            <!-- Imagem -->
+            <div class="flex-shrink-0">
+              <img id="editProductPreview" src="https://via.placeholder.com/150" alt="Preview do Produto"
+                class="w-full sm:w-48 h-auto object-cover rounded-lg shadow" />
+              <label for="editProductImage"
+                class="block mt-3 text-sm text-center text-gray-600 cursor-pointer hover:text-gray-800">
+                Alterar Imagem
+              </label>
+              <input type="file" id="editProductImage" class="hidden" accept="image/*" />
+            </div>
 
-        <!-- Nome -->
-        <div class="mb-6">
-          <label for="editProductName" class="block text-sm font-semibold text-gray-600 mb-1">Nome</label>
-          <input type="text" id="editProductName"
-            class="block w-full rounded-lg border-gray-300 shadow focus:ring-primary focus:border-primary px-4 py-2">
+            <!-- Imagem Atual -->
+            <div id="currentImageContainer" class="mb-6">
+              <label class="block text-sm font-medium text-gray-700">Imagem Atual</label>
+              <img id="currentImagePreview" src="" alt="Imagem do Produto"
+                class="w-32 h-32 object-cover mt-2 rounded-md shadow">
+            </div>
+
+
+            <!-- Formulário -->
+            <form id="editProductForm" class="flex-grow">
+              <input type="hidden" id="editProductId">
+
+              <!-- Nome -->
+              <div class="mb-4">
+                <label for="editProductName" class="block text-sm font-semibold text-gray-600 mb-1">Nome</label>
+                <input type="text" id="editProductName"
+                  class="block w-full rounded-lg border-gray-300 shadow focus:ring-primary focus:border-primary px-4 py-2" />
+              </div>
+
+              <!-- Descrição -->
+              <div class="mb-4">
+                <label for="editProductDescription"
+                  class="block text-sm font-semibold text-gray-600 mb-1">Descrição</label>
+                <textarea id="editProductDescription" rows="2"
+                  class="block w-full rounded-lg border-gray-300 shadow focus:ring-primary focus:border-primary px-4 py-2"></textarea>
+              </div>
+
+              <!-- Preço e Quantidade -->
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+                <div>
+                  <label for="editProductPrice" class="block text-sm font-semibold text-gray-600 mb-1">Preço</label>
+                  <input type="number" id="editProductPrice" step="0.01"
+                    class="block w-full rounded-lg border-gray-300 shadow focus:ring-primary focus:border-primary px-4 py-2" />
+                </div>
+                <div>
+                  <label for="editProductQuantity"
+                    class="block text-sm font-semibold text-gray-600 mb-1">Quantidade</label>
+                  <input type="number" id="editProductQuantity"
+                    class="block w-full rounded-lg border-gray-300 shadow focus:ring-primary focus:border-primary px-4 py-2" />
+                </div>
+              </div>
+
+              <!-- Botões -->
+              <div class="flex justify-end mt-6">
+                <button type="button" id="cancelButton"
+                  class="px-4 py-2 rounded-lg bg-gray-200 text-gray-700 hover:bg-gray-300 hover:shadow transition">
+                  Cancelar
+                </button>
+                <button type="submit"
+                  class="ml-3 px-6 py-2 rounded-lg bg-blue-600 text-white font-semibold hover:bg-blue-700 hover:shadow transition">
+                  Salvar
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
+      </div>
 
-        <!-- Descrição -->
-        <div class="mb-6">
-          <label for="editProductDescription" class="block text-sm font-semibold text-gray-600 mb-1">Descrição</label>
-          <input type="text" id="editProductDescription"
-            class="block w-full rounded-lg border-gray-300 shadow focus:ring-primary focus:border-primary px-4 py-2">
-        </div>
 
-        <!-- Preço -->
-        <div class="mb-6">
-          <label for="editProductPrice" class="block text-sm font-semibold text-gray-600 mb-1">Preço</label>
-          <input type="number" id="editProductPrice" step="0.01"
-            class="block w-full rounded-lg border-gray-300 shadow focus:ring-primary focus:border-primary px-4 py-2">
-        </div>
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+      <script>
+        $(document).ready(function () {
+          // Carregar produtos inicialmente
+          loadProducts();
 
-        <!-- Quantidade -->
-        <div class="mb-6">
-          <label for="editProductQuantity" class="block text-sm font-semibold text-gray-600 mb-1">Quantidade</label>
-          <input type="number" id="editProductQuantity"
-            class="block w-full rounded-lg border-gray-300 shadow focus:ring-primary focus:border-primary px-4 py-2">
-        </div>
+          function loadProducts(search = '', category = '', maxPrice = '', minQuantity = '') {
+            $.ajax({
+              url: `http://localhost:3000/api/produtos`,
+              type: 'GET',
+              data: {
+                search: search,
+                category: category,
+                maxPrice: maxPrice,
+                minQuantity: minQuantity
+              },
+              success: function (produtos) {
+                let filteredProducts = produtos;
 
-        <!-- Botões -->
-        <div class="flex justify-end">
-          <button type="button" id="cancelButton"
-            class="px-4 py-2 rounded-lg bg-gray-200 text-gray-700 hover:bg-gray-300 hover:shadow transition">Cancelar</button>
-          <button type="submit"
-            class="ml-3 px-6 py-2 rounded-lg bg-blue-600 text-white font-semibold hover:bg-blue-700 hover:shadow transition">Salvar</button>
-        </div>
-      </form>
+                // Filtragem adicional no Frontend (se necessário)
+                filteredProducts = produtos.filter(produto => {
+                  return (!category || produto.categoria === category) &&
+                    (!maxPrice || produto.preco <= maxPrice) &&
+                    (!minQuantity || produto.quantidade_estoque >= minQuantity);
+                });
+
+                renderProducts(filteredProducts);
+              }
+            });
+          }
+          $(document).ready(function () {
+            // Carregar fornecedores para o select
+            $.ajax({
+              url: "http://localhost:3000/api/fornecedores",
+              type: "GET",
+              success: function (data) {
+                // Preenche o select com os fornecedores
+                data.forEach(function (fornecedor) {
+                  $("#id_fornecedor").append(
+                    `<option value="${fornecedor.id_fornecedor}">${fornecedor.nome_fornecedor}</option>`
+                  );
+                });
+              },
+              error: function () {
+                alert("Erro ao carregar fornecedores.");
+              }
+            });
+          });
+
+          // Cadastro de produto
+          $("#btnCadastro").on("click", function (e) {
+            e.preventDefault();
+
+            const formData = new FormData($("#productForm")[0]);
+
+            $.ajax({
+              url: "http://localhost:3000/api/produtos",
+              type: "POST",
+              data: formData,
+              processData: false,
+              contentType: false,
+              success: function () {
+                alert("Produto cadastrado com sucesso!");
+                $("#productForm")[0].reset();
+              },
+              error: function (xhr, status, error) {
+                console.log("Status: " + status);
+                console.log("Error: " + error);
+                alert("Erro ao cadastrar produto.");
+              }
+            });
+          });
+        });
+
+
+        $(document).ready(function () {
+          // Carregar produtos inicialmente
+          loadProducts();
+
+          // Carregar lista de produtos
+          function loadProducts(searchValue = '') {
+            $.ajax({
+              url: `http://localhost:3000/api/produtos?search=${encodeURIComponent(searchValue)}`,
+              type: "GET",
+              success: function (produtos) {
+                let tableRows = '';
+                let responsiveList = '';
+
+                produtos.forEach(produto => {
+                  let alert = '';
+                  if (produto.quantidade_estoque <= 20) {
+                    alert = `<span class="text-red-500 font-bold ml-2">Estoque baixo</span>`;
+                  }
+
+                  // Renderização para tabela (desktop)
+                  tableRows += `
+  <tr class="hover:bg-gray-50 transition duration-200 ease-in-out">
+    <td class="px-4 py-2 border">
+      <img 
+        src="http://localhost:3000${produto.imagem}" 
+        alt="Imagem do produto" 
+        class="w-16 h-16 object-cover rounded-lg shadow-sm border border-gray-300"
+      />
+    </td>
+    <td class="px-4 py-2 border text-gray-600 font-medium">${produto.id_produto}</td>
+    <td class="px-4 py-2 border text-gray-800 font-semibold">${produto.nome_produto}</td>
+    <td class="px-4 py-2 border text-gray-700">${produto.descricao}</td>
+    <td class="px-4 py-2 border text-green-600 font-bold">R$ ${produto.preco}</td>
+    <td class="px-4 py-2 border">
+      <span class="text-gray-700">${produto.quantidade_estoque}</span>
+      ${alert}
+    </td>
+    <td class="px-4 py-2 border text-center">
+      <button 
+        class="bg-yellow-500 text-white px-3 py-1 rounded-lg shadow hover:bg-yellow-600 transition duration-150 editBtn"
+        data-id="${produto.id_produto}" 
+        data-produto='${JSON.stringify(produto)}'
+      >
+        Editar
+      </button>
+      <button 
+        class="bg-red-500 text-white px-3 py-1 rounded-lg shadow hover:bg-red-600 transition duration-150 deleteBtn"
+        data-id="${produto.id_produto}"
+      >
+        Excluir
+      </button>
+    </td>
+  </tr>
+`;
+
+
+                  // Renderização para lista (mobile)
+                  responsiveList += `
+  <div class="bg-white p-4 rounded shadow-md mb-4">
+    <div class="flex items-center space-x-4">
+      <img 
+        src="http://localhost:3000${produto.imagem}" 
+        alt="Imagem do produto" 
+        class="w-16 h-16 object-cover cursor-pointer rounded hover:shadow-lg transition"('http://localhost:3000${produto.imagem}')"
+      />
+      <div>
+        <div class="text-lg font-semibold">${produto.nome_produto}</div>
+        <div class="text-gray-600 text-sm">${produto.descricao}</div>
+      </div>
+    </div>
+    <div class="mt-4 text-gray-700">
+      <div><strong>ID:</strong> ${produto.id_produto}</div>
+      <div><strong>Preço:</strong> R$ ${produto.preco}</div>
+      <div><strong>Quantidade:</strong> ${produto.quantidade_estoque} ${alert}</div>
+    </div>
+    <div class="mt-4 flex justify-end space-x-2">
+      <button 
+        class="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600 editBtn" 
+        data-id="${produto.id_produto}" 
+        data-produto='${JSON.stringify(produto)}'
+      >Editar</button>
+      <button 
+        class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 deleteBtn" 
+        data-id="${produto.id_produto}"
+      >Excluir</button>
     </div>
   </div>
-</body>
+`;
+                });
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-  $(document).ready(function () {
-    // Carregar produtos inicialmente
-    loadProducts();
+                // Renderizar tabela
+                $('#productTableBody').html(tableRows);
 
-    function loadProducts(search = '', category = '', maxPrice = '', minQuantity = '') {
-      $.ajax({
-        url: `http://localhost:3000/api/produtos`,
-        type: 'GET',
-        data: {
-          search: search,
-          category: category,
-          maxPrice: maxPrice,
-          minQuantity: minQuantity
-        },
-        success: function (produtos) {
-          let filteredProducts = produtos;
+                // Renderizar lista responsiva
+                $('#responsiveProductList').html(responsiveList);
+              },
+              error: function () {
+                console.error("Erro ao carregar produtos.");
+              }
+            });
+          }
 
-          // Filtragem adicional no Frontend (se necessário)
-          filteredProducts = produtos.filter(produto => {
-            return (!category || produto.categoria === category) &&
-              (!maxPrice || produto.preco <= maxPrice) &&
-              (!minQuantity || produto.quantidade_estoque >= minQuantity);
+
+          // Abrir modal de edição e preencher com dados
+          $(document).on('click', '.editBtn', function () {
+            const produto = $(this).data('produto');
+
+            // Preencher os campos do modal
+            $('#editProductId').val(produto.id_produto);
+            $('#editProductName').val(produto.nome_produto || '');
+            $('#editProductDescription').val(produto.descricao || '');
+            $('#editProductPrice').val(produto.preco || 0);
+            $('#editProductQuantity').val(produto.quantidade_estoque || 0);
+
+            // Atualizar a visualização da imagem no modal
+            const imageUrl = `http://localhost:3000${produto.imagem}`; // URL da imagem do produto
+            $('#currentImagePreview').attr('src', imageUrl);
+
+            // Limpar o campo de upload de imagem (opcional, depende da lógica de upload)
+            $('#editProductImage').val('');
+
+            // Exibir o modal
+            $('#editProductModal').removeClass('hidden');
           });
 
-          renderProducts(filteredProducts);
-        }
-      });
-    }
+          // Fechar o modal ao clicar no botão "Cancelar"
+          $(document).on('click', '#cancelButton', function () {
+            $('#editProductModal').addClass('hidden');
+          });
 
-    $(document).ready(function () {
-      // Carregar produtos inicialmente
-      loadProducts();
 
-      // Eventos de filtro
-      $('#filterCategory, #filterPrice, #filterQuantity').on('change input', function () {
-        applyFilters();
-      });
+          // Atualizar produto no banco de dados
+          $('#editProductForm').on('submit', function (e) {
+            e.preventDefault();
 
-      $('#searchInput').on('input', function () {
-        applyFilters();
-      });
+            const productId = $('#editProductId').val();
+            const productName = $('#editProductName').val();
+            const productDescription = $('#editProductDescription').val();
+            const productPrice = $('#editProductPrice').val();
+            const productQuantity = $('#editProductQuantity').val();
+            const productImage = $('#editProductImage')[0].files[0];  // Pegando o arquivo de imagem
 
-      function applyFilters() {
-        const search = $('#searchInput').val();
-        const category = $('#filterCategory').val();
-        const maxPrice = $('#filterPrice').val();
-        const minQuantity = $('#filterQuantity').val();
-
-        loadProducts(search, category, maxPrice, minQuantity);
-      }
-    });
-
-    // Carregar lista de produtos
-    function loadProducts(searchValue = '') {
-      $.ajax({
-        url: `http://localhost:3000/api/produtos?search=${encodeURIComponent(searchValue)}`,
-        type: "GET",
-        success: function (produtos) {
-          let tableRows = '';
-          let responsiveList = '';
-
-          produtos.forEach(produto => {
-            let alert = '';
-            if (produto.quantidade_estoque <= 20) {
-              alert = `<span class="text-red-500 font-bold ml-2">Estoque baixo</span>`;
+            if (!productName || !productDescription || !productPrice || !productQuantity) {
+              alert('Todos os campos são obrigatórios.');
+              return;
             }
 
-            // Renderização para tabela (desktop)
-            tableRows += `
-          <tr class="hover:bg-gray-100">
-            <td class="px-4 py-2 border">${produto.id_produto}</td>
-            <td class="px-4 py-2 border">${produto.nome_produto}</td>
-            <td class="px-4 py-2 border">${produto.descricao}</td>
-            <td class="px-4 py-2 border">${produto.preco}</td>
-            <td class="px-4 py-2 border">${produto.quantidade_estoque} ${alert}</td>
-            <td class="px-4 py-2 border text-center">
-              <button class="bg-yellow-500 text-white px-2 py-1 rounded hover:bg-yellow-600 editBtn" 
-                data-id="${produto.id_produto}" 
-                data-produto='${JSON.stringify(produto)}'>Editar</button>
-              <button class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 deleteBtn" 
-                data-id="${produto.id_produto}">Excluir</button>
-            </td>
-          </tr>
-        `;
+            // FormData é usado para enviar dados de formulário com arquivos
+            const formData = new FormData();
+            formData.append('nome_produto', productName);
+            formData.append('descricao', productDescription);
+            formData.append('preco', parseFloat(productPrice));
+            formData.append('quantidade_estoque', parseInt(productQuantity, 10));
+            if (productImage) {
+              formData.append('imagem', productImage);  // Adicionando a imagem ao FormData
+            }
 
-            // Renderização para lista (mobile)
-            responsiveList += `
-          <div class="bg-white p-4 rounded shadow-md">
-            <div class="mb-2">
-              <strong>ID:</strong> ${produto.id_produto}
-            </div>
-            <div class="mb-2">
-              <strong>Nome:</strong> ${produto.nome_produto}
-            </div>
-            <div class="mb-2">
-              <strong>Descrição:</strong> ${produto.descricao}
-            </div>
-            <div class="mb-2">
-              <strong>Preço:</strong> R$ ${produto.preco}
-            </div>
-            <div class="mb-2 flex justify-between items-center">
-              <span><strong>Quantidade:</strong> ${produto.quantidade_estoque} ${alert}</span>
-              <div class="space-x-2">
-                <button class="bg-yellow-500 text-white px-2 py-1 rounded hover:bg-yellow-600 editBtn" 
-                  data-id="${produto.id_produto}" 
-                  data-produto='${JSON.stringify(produto)}'>Editar</button>
-                <button class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 deleteBtn" 
-                  data-id="${produto.id_produto}">Excluir</button>
-              </div>
-            </div>
-          </div>
-        `;
+            $.ajax({
+              url: `http://localhost:3000/api/produtos/${productId}`,
+              type: 'PUT',
+              data: formData,
+              processData: false,  // Impede que o jQuery tente processar os dados
+              contentType: false,  // Impede que o jQuery defina o contentType automaticamente (deve ser multipart/form-data)
+              success: function () {
+                alert('Produto atualizado com sucesso!');
+                $('#editProductModal').addClass('hidden');
+                loadProducts();
+              },
+              error: function () {
+                alert('Erro ao atualizar o produto.');
+              }
+            });
           });
 
-          // Renderizar tabela
-          $('#productTableBody').html(tableRows);
+          // Excluir produto no banco de dados
+          $(document).on('click', '.deleteBtn', function () {
+            const productId = $(this).data('id');
 
-          // Renderizar lista responsiva
-          $('#responsiveProductList').html(responsiveList);
-        },
-        error: function () {
-          console.error("Erro ao carregar produtos.");
-        }
-      });
-    }
+            if (confirm('Você tem certeza que deseja excluir este produto?')) {
+              $.ajax({
+                url: `http://localhost:3000/api/produtos/${productId}`,
+                type: 'DELETE',
+                success: function () {
+                  alert('Produto excluído com sucesso!');
+                  loadProducts();
+                },
+                error: function () {
+                  alert('Erro ao excluir o produto.');
+                }
+              });
+            }
+          });
 
-
-    // Abrir modal de edição e preencher com dados
-    $(document).on('click', '.editBtn', function () {
-      const produto = $(this).data('produto');
-
-      // Preencher os campos do modal
-      $('#editProductId').val(produto.id_produto);
-      $('#editProductName').val(produto.nome_produto || '');
-      $('#editProductDescription').val(produto.descricao || '');
-      $('#editProductPrice').val(produto.preco || 0);
-      $('#editProductQuantity').val(produto.quantidade_estoque || 0);
-
-      // Exibir o modal
-      $('#editProductModal').removeClass('hidden');
-    });
-
-    // Atualizar produto no banco de dados
-    $('#editProductForm').on('submit', function (e) {
-      e.preventDefault();
-
-      const productId = $('#editProductId').val();
-      const productName = $('#editProductName').val();
-      const productDescription = $('#editProductDescription').val();
-      const productPrice = $('#editProductPrice').val();
-      const productQuantity = $('#editProductQuantity').val();
-
-      if (!productName || !productDescription || !productPrice || !productQuantity) {
-        alert('Todos os campos são obrigatórios.');
-        return;
-      }
-
-      $.ajax({
-        url: `http://localhost:3000/api/produto/${productId}`,
-        type: 'PUT',
-        contentType: 'application/json',
-        data: JSON.stringify({
-          nome_produto: productName,
-          descricao: productDescription,
-          preco: parseFloat(productPrice),
-          quantidade_estoque: parseInt(productQuantity, 10),
-        }),
-        success: function () {
-          alert('Produto atualizado com sucesso!');
-          $('#editProductModal').addClass('hidden');
-          loadProducts();
-        },
-        error: function () {
-          alert('Erro ao atualizar o produto.');
-        }
-      });
-    });
-
-    // Excluir produto no banco de dados
-    $(document).on('click', '.deleteBtn', function () {
-      const productId = $(this).data('id');
-
-      if (confirm('Você tem certeza que deseja excluir este produto?')) {
-        $.ajax({
-          url: `http://localhost:3000/api/produto/${productId}`,
-          type: 'DELETE',
-          success: function () {
-            alert('Produto excluído com sucesso!');
-            loadProducts();
-          },
-          error: function () {
-            alert('Erro ao excluir o produto.');
-          }
+          // Fechar o modal de edição
+          $('#closeModal').on('click', function () {
+            $('#editProductModal').addClass('hidden');
+          });
         });
-      }
-    });
-
-    // Fechar o modal de edição
-    $('#closeModal').on('click', function () {
-      $('#editProductModal').addClass('hidden');
-    });
-  });
-</script>
+      </script>
 
 </body>
 

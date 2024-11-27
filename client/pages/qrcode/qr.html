@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login e Cadastro</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.0.24/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 flex justify-center items-center min-h-screen">
+
+    <!-- Formulário de Login -->
+    <div id="login-form" class="bg-white p-6 rounded-lg shadow-lg max-w-md w-full">
+        <h2 class="text-2xl font-semibold text-gray-700 mb-4">Login</h2>
+        <form action="/login" method="POST">
+            <div class="mb-4">
+                <label for="email" class="block text-sm font-medium text-gray-600">Email</label>
+                <input type="email" id="email" name="email" required
+                    class="mt-2 p-3 w-full border rounded-md shadow-sm">
+            </div>
+            <div class="mb-4">
+                <label for="senha" class="block text-sm font-medium text-gray-600">Senha</label>
+                <input type="password" id="senha" name="senha" required
+                    class="mt-2 p-3 w-full border rounded-md shadow-sm">
+            </div>
+            <div class="mb-4 flex justify-between items-center">
+                <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-md">Login</button>
+                <a href="javascript:void(0)" onclick="toggleForms()">Criar conta</a>
+            </div>
+        </form>
+    </div>
+
+
+    <!-- Formulário de Cadastro -->
+    <div id="signup-form" class="bg-white p-6 rounded-lg shadow-lg max-w-md w-full">
+        <h2 class="text-2xl font-semibold text-gray-700 mb-4">Cadastro</h2>
+        <form action="/signup" method="POST">
+            <div class="mb-4">
+                <label for="nome_usuario" class="block text-sm font-medium text-gray-600">Nome</label>
+                <input type="text" id="nome_usuario" name="nome_usuario" required
+                    class="mt-2 p-3 w-full border rounded-md shadow-sm">
+            </div>
+            <div class="mb-4">
+                <label for="email" class="block text-sm font-medium text-gray-600">Email</label>
+                <input type="email" id="email" name="email" required
+                    class="mt-2 p-3 w-full border rounded-md shadow-sm">
+            </div>
+            <div class="mb-4">
+                <label for="senha" class="block text-sm font-medium text-gray-600">Senha</label>
+                <input type="password" id="senha" name="senha" required
+                    class="mt-2 p-3 w-full border rounded-md shadow-sm">
+            </div>
+            <div class="mb-4 flex justify-between items-center">
+                <button type="submit" class="px-4 py-2 bg-green-600 text-white rounded-md">Cadastrar</button>
+                <a href="javascript:void(0)" onclick="toggleForms()">Já tem conta? Faça login</a>
+            </div>
+        </form>
+    </div>
+
+
+    <script>
+        // Função para alternar entre os formulários de login e cadastro
+        function toggleForms() {
+            const loginForm = document.getElementById('login-form');
+            const signupForm = document.getElementById('signup-form');
+            loginForm.classList.toggle('hidden');
+            signupForm.classList.toggle('hidden');
+        }
+    </script>
+</body>
+
+</html>
