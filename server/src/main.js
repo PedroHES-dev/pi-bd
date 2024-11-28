@@ -4,6 +4,9 @@ import path from 'path';
 import fs from 'fs/promises';  // Usando fs.promises para criar o diretório
 import { fileURLToPath } from 'url';  // Importar fileURLToPath para resolver o caminho
 import { productRouter } from './scripts/product.js';
+import { userRouter } from '../src/routes/userRoutes.js'; // Importa o roteador de usuários
+import { authRouter } from '../src/routes/authRoutes.js';
+
 
 // Resolver o diretório atual com import.meta.url
 const __filename = fileURLToPath(import.meta.url);
@@ -30,9 +33,9 @@ const port = 3000;
 app.use(cors({ origin: '*' }));
 app.use(express.json());
 app.use("/api", productRouter);
-
-// Servir arquivos estáticos da pasta "uploads"
 app.use('/uploads', express.static(uploadsDir));
+app.use("/api/usuarios", userRouter);
+app.use('/api/auth', authRouter);
 
 // Garantir que o diretório "uploads" seja criado antes de iniciar o servidor
 ensureUploadsDirectory().then(() => {

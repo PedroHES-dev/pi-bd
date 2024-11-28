@@ -1,5 +1,5 @@
 body {
-    padding-top: 4rem; /* Garante que o conteúdo não fique atrás da navbar */
+    padding-top: 1rem; /* Garante que o conteúdo não fique atrás da navbar */
 }
 
 .min-h-screen {

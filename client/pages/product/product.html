@@ -26,31 +26,43 @@
     <!-- Menu Lateral -->
     <aside class="bg-primary text-white w-64 h-screen fixed top-0 left-0 p-6 hidden sm:block">
       <ul class="space-y-6">
-        <!-- Dashboard -->
+
+        <!-- Perfil do Usuário -->
         <li class="flex items-center space-x-3">
-          <span class="material-icons">dashboard</span>
-          <a href="../index.html" class="block hover:text-gray-300">Dashboard</a>
+          <img src="../login/img/user.png" alt="Foto de Perfil" class="w-8 h-8 rounded-full"> <!-- Foto do Usuário -->
+          <span class="text-red-700">Admin</span> <!-- Nome do Usuário -->
         </li>
+        
         <!-- Produtos -->
         <li class="flex items-center space-x-3">
           <span class="material-icons">inventory_2</span>
           <a href="#" class="block hover:text-gray-300">Produtos</a>
         </li>
+
         <!-- Gráficos -->
         <li class="flex items-center space-x-3">
           <span class="material-icons">bar_chart</span>
           <a href="../graph/graph.html" class="block hover:text-gray-300">Gráficos</a>
         </li>
+
+        <!-- Histórico de Baixa -->
+        <li class="flex items-center space-x-3">
+          <span class="material-icons">history</span> <!-- Ícone de Histórico -->
+          <a href="#" class="block hover:text-gray-300">Histórico</a>
+        </li>
+
         <!-- Relatórios -->
         <li class="flex items-center space-x-3">
           <span class="material-icons">description</span>
           <a href="#" class="block hover:text-gray-300">Relatórios</a>
         </li>
-        <!-- Configurações -->
-        <li class="flex items-center space-x-3">
-          <span class="material-icons">settings</span>
-          <a href="#" class="block hover:text-gray-300">Configurações</a>
+
+         <!-- Botão de Cadastrar Usuário (Visível apenas para Admin) -->
+         <li id="adminButton" class="flex items-center space-x-3 mt-4">
+          <span class="material-icons">person_add</span>
+          <a href="../register/register.html" class="block hover:text-gray-300">Cadastrar Usuário</a>
         </li>
+
         <!-- Sair -->
         <li class="absolute bottom-5 flex items-center space-x-3">
           <span class="material-icons">logout</span>
@@ -68,8 +80,8 @@
           <form id="productForm" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-6">
             <!-- Imagem -->
             <div>
-              <label for="image" class="block text-sm font-semibold text-gray-600">Imagem</label>
-              <input type="file" id="image" name="imagem"
+              <label for="imagem" class="block text-sm font-semibold text-gray-600">Imagem</label>
+              <input type="file" id="imagem" name="imagem"
                 class="mt-2 block w-full rounded-md border border-gray-300 shadow focus:ring-primary focus:border-primary bg-gray-50 p-2">
             </div>
 
@@ -100,7 +112,14 @@
               <input type="number" id="quantidade_estoque" name="quantidade_estoque"
                 class="mt-2 block w-full rounded-md border border-gray-300 shadow focus:ring-primary focus:border-primary bg-gray-50 p-2">
             </div>
-
+            <!-- Categoria -->
+            <div>
+              <label for="id_categoria" class="block text-sm font-semibold text-gray-600">Categoria</label>
+              <select id="id_categoria" name="id_categoria"
+                class="mt-2 block w-full rounded-md border border-gray-300 shadow focus:ring-primary focus:border-primary bg-gray-50 p-2">
+                <!-- Categorias carregadas dinamicamente -->
+              </select>
+            </div>
             <!-- Fornecedor -->
             <div>
               <label for="id_fornecedor" class="block text-sm font-semibold text-gray-600">Fornecedor</label>
@@ -119,6 +138,7 @@
             </button>
           </div>
         </section>
+
 
         <!-- Produtos Cadastrados -->
         <section class="p-6">
@@ -142,6 +162,8 @@
                   <th class="px-6 py-3 text-sm font-semibold">Descrição</th>
                   <th class="px-6 py-3 text-sm font-semibold">Preço</th>
                   <th class="px-6 py-3 text-sm font-semibold">Quantidade</th>
+                  <th class="px-6 py-3 text-sm font-semibold">Categoria</th>
+                  <th class="px-6 py-3 text-sm font-semibold">Fornecedor</th>
                   <th class="px-6 py-3 text-sm font-semibold text-center">Ações</th>
                 </tr>
               </thead>
@@ -160,249 +182,303 @@
     </main>
   </div>
 
-  <!-- Barra Inferior -->
   <div class="bg-primary text-white fixed bottom-0 left-0 w-full flex justify-around p-3 sm:hidden">
-    <a href="../index.html" class="flex flex-col items-center hover:text-gray-300">
-      <span class="material-icons">dashboard</span>
-      <span class="text-xs">Dashboard</span>
-    </a>
+    <!-- Produto -->
     <a href="#" class="flex flex-col items-center hover:text-gray-300">
       <span class="material-icons">inventory</span>
-      <span class="text-xs">Produtos</span>
+      <span class="text-xs">Produto</span>
     </a>
+
+    <!-- Gráfico -->
     <a href="#" class="flex flex-col items-center hover:text-gray-300">
       <span class="material-icons">bar_chart</span>
-      <span class="text-xs">Gráficos</span>
+      <span class="text-xs">Gráfico</span>
     </a>
+
+    <!-- "+" (Botão de Adicionar) -->
+    <a href="#"
+      class="flex flex-col items-center justify-center w-14 h-14 rounded-full bg-yellow-600 text-white hover:bg-yellow-500">
+      <span class="material-icons text-3xl">camera_alt</span>
+    </a>
+
+    <!-- Relatório -->
     <a href="#" class="flex flex-col items-center hover:text-gray-300">
-      <span class="material-icons">settings</span>
-      <span class="text-xs">Configurações</span>
+      <span class="material-icons">description</span>
+      <span class="text-xs">Relatório</span>
     </a>
+
+    <!-- Sair -->
     <a href="../login/login.html" class="flex flex-col items-center hover:text-gray-300">
       <span class="material-icons">logout</span>
-      <span class="text-xs">sair</span>
+      <span class="text-xs">Sair</span>
     </a>
   </div>
-  </div>
+
 
   <!-- Modal de Edição -->
   <div id="editProductModal" class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-75 hidden">
-    <div class="bg-white p-8 rounded-xl shadow-2xl w-96 relative">
+    <div class="bg-white p-6 sm:p-8 rounded-xl shadow-2xl w-full max-w-xs sm:max-w-lg relative overflow-hidden">
       <!-- Ícone de Fechar -->
       <button id="closeModal" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition duration-200">
         <span class="material-icons">close</span>
       </button>
 
-      <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-        <div class="bg-white rounded-lg shadow-xl max-w-4xl w-full p-6 sm:p-8 overflow-hidden">
-          <!-- Cabeçalho -->
-          <h2 class="text-2xl font-extrabold text-gray-700 mb-6 border-b pb-2">Editar Produto</h2>
-
-          <!-- Conteúdo Principal -->
-          <div class="flex flex-col sm:flex-row sm:space-x-6">
-            <!-- Imagem -->
-            <div class="flex-shrink-0">
-              <img id="editProductPreview" src="https://via.placeholder.com/150" alt="Preview do Produto"
-                class="w-full sm:w-48 h-auto object-cover rounded-lg shadow" />
-              <label for="editProductImage"
-                class="block mt-3 text-sm text-center text-gray-600 cursor-pointer hover:text-gray-800">
-                Alterar Imagem
-              </label>
-              <input type="file" id="editProductImage" class="hidden" accept="image/*" />
-            </div>
-
-            <!-- Imagem Atual -->
-            <div id="currentImageContainer" class="mb-6">
-              <label class="block text-sm font-medium text-gray-700">Imagem Atual</label>
-              <img id="currentImagePreview" src="" alt="Imagem do Produto"
-                class="w-32 h-32 object-cover mt-2 rounded-md shadow">
-            </div>
-
-
-            <!-- Formulário -->
-            <form id="editProductForm" class="flex-grow">
-              <input type="hidden" id="editProductId">
-
-              <!-- Nome -->
-              <div class="mb-4">
-                <label for="editProductName" class="block text-sm font-semibold text-gray-600 mb-1">Nome</label>
-                <input type="text" id="editProductName"
-                  class="block w-full rounded-lg border-gray-300 shadow focus:ring-primary focus:border-primary px-4 py-2" />
-              </div>
-
-              <!-- Descrição -->
-              <div class="mb-4">
-                <label for="editProductDescription"
-                  class="block text-sm font-semibold text-gray-600 mb-1">Descrição</label>
-                <textarea id="editProductDescription" rows="2"
-                  class="block w-full rounded-lg border-gray-300 shadow focus:ring-primary focus:border-primary px-4 py-2"></textarea>
-              </div>
-
-              <!-- Preço e Quantidade -->
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
-                <div>
-                  <label for="editProductPrice" class="block text-sm font-semibold text-gray-600 mb-1">Preço</label>
-                  <input type="number" id="editProductPrice" step="0.01"
-                    class="block w-full rounded-lg border-gray-300 shadow focus:ring-primary focus:border-primary px-4 py-2" />
-                </div>
-                <div>
-                  <label for="editProductQuantity"
-                    class="block text-sm font-semibold text-gray-600 mb-1">Quantidade</label>
-                  <input type="number" id="editProductQuantity"
-                    class="block w-full rounded-lg border-gray-300 shadow focus:ring-primary focus:border-primary px-4 py-2" />
-                </div>
-              </div>
-
-              <!-- Botões -->
-              <div class="flex justify-end mt-6">
-                <button type="button" id="cancelButton"
-                  class="px-4 py-2 rounded-lg bg-gray-200 text-gray-700 hover:bg-gray-300 hover:shadow transition">
-                  Cancelar
-                </button>
-                <button type="submit"
-                  class="ml-3 px-6 py-2 rounded-lg bg-blue-600 text-white font-semibold hover:bg-blue-700 hover:shadow transition">
-                  Salvar
-                </button>
-              </div>
-            </form>
+      <!-- Conteúdo Principal -->
+      <div class="flex flex-col sm:flex-row sm:space-x-6">
+        <!-- Imagem -->
+        <div class="w-full sm:w-48 mb-4 sm:mb-0 flex justify-center">
+          <div class="w-16 h-16 sm:w-48 sm:h-48">
+            <img id="editProductPreview" src="https://via.placeholder.com/150" alt="Preview do Produto"
+              class="w-full h-full object-cover rounded-lg shadow" />
+            <label for="editProductImage"
+              class="block mt-3 text-sm text-center text-gray-600 cursor-pointer hover:text-gray-800">
+              Alterar Imagem
+            </label>
+            <input type="file" id="editProductImage" class="hidden" accept="image/*" />
           </div>
         </div>
+
+
+
+        <!-- Formulário -->
+        <form id="editProductForm" class="flex-grow w-full sm:w-auto">
+          <input type="hidden" id="editProductId">
+
+          <!-- Nome -->
+          <div class="mb-4">
+            <label for="editProductName" class="block text-sm font-semibold text-gray-600 mb-1">Nome</label>
+            <input type="text" id="editProductName"
+              class="block w-full rounded-lg border-gray-300 shadow focus:ring-primary focus:border-primary px-4 py-2" />
+          </div>
+
+          <!-- Descrição -->
+          <div class="mb-4">
+            <label for="editProductDescription" class="block text-sm font-semibold text-gray-600 mb-1">Descrição</label>
+            <textarea id="editProductDescription" rows="2"
+              class="block w-full rounded-lg border-gray-300 shadow focus:ring-primary focus:border-primary px-4 py-2"></textarea>
+          </div>
+
+          <!-- Preço e Quantidade -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+            <div>
+              <label for="editProductPrice" class="block text-sm font-semibold text-gray-600 mb-1">Preço</label>
+              <input type="number" id="editProductPrice" step="0.01"
+                class="block w-full rounded-lg border-gray-300 shadow focus:ring-primary focus:border-primary px-4 py-2" />
+            </div>
+            <div>
+              <label for="editProductQuantity" class="block text-sm font-semibold text-gray-600 mb-1">Quantidade</label>
+              <input type="number" id="editProductQuantity"
+                class="block w-full rounded-lg border-gray-300 shadow focus:ring-primary focus:border-primary px-4 py-2" />
+            </div>
+          </div>
+
+          <!-- Botões -->
+          <div class="flex justify-end mt-6 space-x-4">
+            <button type="button" id="cancelButton"
+              class="px-4 py-2 rounded-lg bg-gray-200 text-gray-700 hover:bg-gray-300 hover:shadow transition">
+              Cancelar
+            </button>
+            <button type="submit"
+              class="px-6 py-2 rounded-lg bg-blue-600 text-white font-semibold hover:bg-blue-700 hover:shadow transition">
+              Salvar
+            </button>
+          </div>
+        </form>
       </div>
+    </div>
+  </div>
 
 
-      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-      <script>
-        $(document).ready(function () {
-          // Carregar produtos inicialmente
-          loadProducts();
 
-          function loadProducts(search = '', category = '', maxPrice = '', minQuantity = '') {
+<script src="../../src/scripts/auth.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+     $(document).ready(function () {
+        // Carregar produtos inicialmente
+        loadProducts();
+
+        function loadProducts(search = '', category = '', maxPrice = '', minQuantity = '') {
             $.ajax({
-              url: `http://localhost:3000/api/produtos`,
-              type: 'GET',
-              data: {
-                search: search,
-                category: category,
-                maxPrice: maxPrice,
-                minQuantity: minQuantity
-              },
-              success: function (produtos) {
-                let filteredProducts = produtos;
+                url: `http://localhost:3000/api/produtos`,
+                type: 'GET',
+                data: {
+                    search: search,
+                    category: category,
+                    maxPrice: maxPrice,
+                    minQuantity: minQuantity
+                },
+                success: function (produtos) {
+                    let filteredProducts = produtos;
 
-                // Filtragem adicional no Frontend (se necessário)
-                filteredProducts = produtos.filter(produto => {
-                  return (!category || produto.categoria === category) &&
-                    (!maxPrice || produto.preco <= maxPrice) &&
-                    (!minQuantity || produto.quantidade_estoque >= minQuantity);
-                });
+                    // Filtragem adicional no Frontend (se necessário)
+                    filteredProducts = produtos.filter(produto => {
+                        return (!category || produto.categoria === category) &&
+                            (!maxPrice || produto.preco <= maxPrice) &&
+                            (!minQuantity || produto.quantidade_estoque >= minQuantity);
+                    });
 
-                renderProducts(filteredProducts);
-              }
+                    renderProducts(filteredProducts);
+                }
             });
+        }
+
+        // Função para verificar se o usuário é admin
+function checkAdminAccess() {
+  const token = localStorage.getItem('token');  // Recupera o token do localStorage
+  if (token) {
+    try {
+      const decoded = jwt.decode(token);  // Decodifica o token para acessar a role
+      return decoded.role === 'admin';  // Verifica se a role é admin
+    } catch (e) {
+      console.error('Erro ao decodificar o token', e);
+      return false;  // Caso haja erro ao decodificar o token, assume que não é admin
+    }
+  }
+  return false;  // Se o token não existir, assume que não é admin
+}
+
+// Exibindo ou escondendo o botão de cadastro conforme a role
+window.onload = function() {
+  const adminButton = document.getElementById('adminButton');  // ID do botão de cadastro
+  if (checkAdminAccess()) {
+    adminButton.style.display = 'block';  // Exibe o botão se o usuário for admin
+  } else {
+    adminButton.style.display = 'none';  // Esconde o botão se o usuário não for admin
+  }
+
+  console.log('Usuário é admin?', checkAdminAccess());  // Log para depuração
+};
+
+
+      $(document).ready(function () {
+        // Carregar fornecedores para o select
+        $.ajax({
+          url: "http://localhost:3000/api/fornecedores",
+          type: "GET",
+          success: function (data) {
+            // Preenche o select com os fornecedores
+            data.forEach(function (fornecedor) {
+              $("#id_fornecedor").append(
+                `<option value="${fornecedor.id_fornecedor}">${fornecedor.nome_fornecedor}</option>`
+              );
+            });
+          },
+          error: function () {
+            alert("Erro ao carregar fornecedores.");
           }
-          $(document).ready(function () {
-            // Carregar fornecedores para o select
-            $.ajax({
-              url: "http://localhost:3000/api/fornecedores",
-              type: "GET",
-              success: function (data) {
-                // Preenche o select com os fornecedores
-                data.forEach(function (fornecedor) {
-                  $("#id_fornecedor").append(
-                    `<option value="${fornecedor.id_fornecedor}">${fornecedor.nome_fornecedor}</option>`
-                  );
-                });
-              },
-              error: function () {
-                alert("Erro ao carregar fornecedores.");
-              }
-            });
-          });
-
-          // Cadastro de produto
-          $("#btnCadastro").on("click", function (e) {
-            e.preventDefault();
-
-            const formData = new FormData($("#productForm")[0]);
-
-            $.ajax({
-              url: "http://localhost:3000/api/produtos",
-              type: "POST",
-              data: formData,
-              processData: false,
-              contentType: false,
-              success: function () {
-                alert("Produto cadastrado com sucesso!");
-                $("#productForm")[0].reset();
-              },
-              error: function (xhr, status, error) {
-                console.log("Status: " + status);
-                console.log("Error: " + error);
-                alert("Erro ao cadastrar produto.");
-              }
-            });
-          });
         });
 
+        // Carregar categorias para o select
+        $.ajax({
+          url: "http://localhost:3000/api/categorias",  // Alterar para o endpoint da categoria
+          type: "GET",
+          success: function (data) {
+            // Preenche o select com as categorias
+            data.forEach(function (categoria) {
+              $("#id_categoria").append(
+                `<option value="${categoria.id_categoria}">${categoria.nome_categoria}</option>`
+              );
+            });
+          },
+          error: function () {
+            alert("Erro ao carregar categorias.");
+          }
+        });
+      });
 
-        $(document).ready(function () {
-          // Carregar produtos inicialmente
-          loadProducts();
 
-          // Carregar lista de produtos
-          function loadProducts(searchValue = '') {
-            $.ajax({
-              url: `http://localhost:3000/api/produtos?search=${encodeURIComponent(searchValue)}`,
-              type: "GET",
-              success: function (produtos) {
-                let tableRows = '';
-                let responsiveList = '';
+      // Cadastro de produto
+      $("#btnCadastro").on("click", function (e) {
+        e.preventDefault();
 
-                produtos.forEach(produto => {
-                  let alert = '';
-                  if (produto.quantidade_estoque <= 20) {
-                    alert = `<span class="text-red-500 font-bold ml-2">Estoque baixo</span>`;
-                  }
+        const formData = new FormData($("#productForm")[0]);
 
-                  // Renderização para tabela (desktop)
-                  tableRows += `
-  <tr class="hover:bg-gray-50 transition duration-200 ease-in-out">
-    <td class="px-4 py-2 border">
-      <img 
-        src="http://localhost:3000${produto.imagem}" 
-        alt="Imagem do produto" 
-        class="w-16 h-16 object-cover rounded-lg shadow-sm border border-gray-300"
-      />
-    </td>
-    <td class="px-4 py-2 border text-gray-600 font-medium">${produto.id_produto}</td>
-    <td class="px-4 py-2 border text-gray-800 font-semibold">${produto.nome_produto}</td>
-    <td class="px-4 py-2 border text-gray-700">${produto.descricao}</td>
-    <td class="px-4 py-2 border text-green-600 font-bold">R$ ${produto.preco}</td>
-    <td class="px-4 py-2 border">
-      <span class="text-gray-700">${produto.quantidade_estoque}</span>
-      ${alert}
-    </td>
-    <td class="px-4 py-2 border text-center">
-      <button 
-        class="bg-yellow-500 text-white px-3 py-1 rounded-lg shadow hover:bg-yellow-600 transition duration-150 editBtn"
-        data-id="${produto.id_produto}" 
-        data-produto='${JSON.stringify(produto)}'
-      >
-        Editar
-      </button>
-      <button 
-        class="bg-red-500 text-white px-3 py-1 rounded-lg shadow hover:bg-red-600 transition duration-150 deleteBtn"
-        data-id="${produto.id_produto}"
-      >
-        Excluir
-      </button>
-    </td>
-  </tr>
+        // Log para validação
+        for (let pair of formData.entries()) {
+          console.log(`${pair[0]}: ${pair[1]}`);
+        }
+
+        $.ajax({
+          url: "http://localhost:3000/api/produtos",
+          type: "POST",
+          data: formData,
+          processData: false,
+          contentType: false,
+          success: function () {
+            alert("Produto cadastrado com sucesso!");
+            $("#productForm")[0].reset();
+          },
+          error: function (xhr, status, error) {
+            console.log("Status: " + status);
+            console.log("Error: " + error);
+            console.log("Response Text: " + xhr.responseText);
+            alert("Erro ao cadastrar produto.");
+          },
+        });
+      });
+
+
+    $(document).ready(function () {
+      // Carregar produtos inicialmente
+      loadProducts();
+
+ // Carregar lista de produtos
+function loadProducts(searchValue = '') {
+  $.ajax({
+    url: `http://localhost:3000/api/produtos?search=${encodeURIComponent(searchValue)}`,
+    type: "GET",
+    success: function (produtos) {
+      let tableRows = '';
+      let responsiveList = '';
+
+      produtos.forEach(produto => {
+        let alert = '';
+        if (produto.quantidade_estoque <= 20) {
+          alert = `<span class="text-red-500 font-bold ml-2">Estoque baixo</span>`;
+        }
+
+        // Renderização para tabela (desktop)
+        tableRows += `
+          <tr class="hover:bg-gray-50 transition duration-200 ease-in-out">
+            <td class="px-4 py-2 border">
+              <img 
+                src="http://localhost:3000${produto.imagem}" 
+                alt="Imagem do produto" 
+                class="w-16 h-16 object-cover rounded-lg shadow-sm border border-gray-300"
+              />
+            </td>
+            <td class="px-4 py-2 border text-gray-600 font-medium">${produto.id_produto}</td>
+            <td class="px-4 py-2 border text-gray-800 font-semibold">${produto.nome_produto}</td>
+            <td class="px-4 py-2 border text-gray-700">${produto.descricao}</td>
+            <td class="px-4 py-2 border text-green-600 font-bold">R$ ${produto.preco}</td>
+            <td class="px-4 py-2 border">
+              <span class="text-gray-700">${produto.quantidade_estoque}</span>
+              ${alert}
+            </td>
+            <td class="px-4 py-2 border text-gray-800 font-semibold">${produto.nome_categoria}</td> <!-- Nome da categoria -->
+            <td class="px-4 py-2 border text-gray-800 font-semibold">${produto.nome_fornecedor}</td> <!-- Nome do fornecedor -->
+            <td class="px-4 py-2 border text-center">
+              <button 
+                class="bg-yellow-500 text-white px-4 py-2 rounded-lg shadow-lg hover:bg-yellow-600 hover:scale-105 transition duration-300 ease-in-out transform focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-opacity-50 editBtn"
+                data-id="${produto.id_produto}" 
+                data-produto='${JSON.stringify(produto)}'
+              >
+                Editar
+              </button>
+
+              <button 
+                class="bg-red-500 text-white px-4 py-2 rounded-lg shadow-lg hover:bg-red-600 hover:scale-105 transition duration-300 ease-in-out transform focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-opacity-50 deleteBtn"
+                data-id="${produto.id_produto}"
+              >
+                Excluir
+              </button>
+            </td>
+          </tr>
 `;
 
 
-                  // Renderização para lista (mobile)
-                  responsiveList += `
+              // Renderização para lista (mobile)
+              responsiveList += `
   <div class="bg-white p-4 rounded shadow-md mb-4">
     <div class="flex items-center space-x-4">
       <img 
@@ -419,6 +495,8 @@
       <div><strong>ID:</strong> ${produto.id_produto}</div>
       <div><strong>Preço:</strong> R$ ${produto.preco}</div>
       <div><strong>Quantidade:</strong> ${produto.quantidade_estoque} ${alert}</div>
+      <div><strong>Categoria:</strong> ${produto.nome_categoria}</div>
+      <div><strong>Fornecedor:</strong> ${produto.nome_fornecedor}</div>
     </div>
     <div class="mt-4 flex justify-end space-x-2">
       <button 
@@ -433,117 +511,118 @@
     </div>
   </div>
 `;
-                });
-
-                // Renderizar tabela
-                $('#productTableBody').html(tableRows);
-
-                // Renderizar lista responsiva
-                $('#responsiveProductList').html(responsiveList);
-              },
-              error: function () {
-                console.error("Erro ao carregar produtos.");
-              }
             });
+
+            // Renderizar tabela
+            $('#productTableBody').html(tableRows);
+
+            // Renderizar lista responsiva
+            $('#responsiveProductList').html(responsiveList);
+          },
+          error: function () {
+            console.error("Erro ao carregar produtos.");
           }
-
-
-          // Abrir modal de edição e preencher com dados
-          $(document).on('click', '.editBtn', function () {
-            const produto = $(this).data('produto');
-
-            // Preencher os campos do modal
-            $('#editProductId').val(produto.id_produto);
-            $('#editProductName').val(produto.nome_produto || '');
-            $('#editProductDescription').val(produto.descricao || '');
-            $('#editProductPrice').val(produto.preco || 0);
-            $('#editProductQuantity').val(produto.quantidade_estoque || 0);
-
-            // Atualizar a visualização da imagem no modal
-            const imageUrl = `http://localhost:3000${produto.imagem}`; // URL da imagem do produto
-            $('#currentImagePreview').attr('src', imageUrl);
-
-            // Limpar o campo de upload de imagem (opcional, depende da lógica de upload)
-            $('#editProductImage').val('');
-
-            // Exibir o modal
-            $('#editProductModal').removeClass('hidden');
-          });
-
-          // Fechar o modal ao clicar no botão "Cancelar"
-          $(document).on('click', '#cancelButton', function () {
-            $('#editProductModal').addClass('hidden');
-          });
-
-
-          // Atualizar produto no banco de dados
-          $('#editProductForm').on('submit', function (e) {
-            e.preventDefault();
-
-            const productId = $('#editProductId').val();
-            const productName = $('#editProductName').val();
-            const productDescription = $('#editProductDescription').val();
-            const productPrice = $('#editProductPrice').val();
-            const productQuantity = $('#editProductQuantity').val();
-            const productImage = $('#editProductImage')[0].files[0];  // Pegando o arquivo de imagem
-
-            if (!productName || !productDescription || !productPrice || !productQuantity) {
-              alert('Todos os campos são obrigatórios.');
-              return;
-            }
-
-            // FormData é usado para enviar dados de formulário com arquivos
-            const formData = new FormData();
-            formData.append('nome_produto', productName);
-            formData.append('descricao', productDescription);
-            formData.append('preco', parseFloat(productPrice));
-            formData.append('quantidade_estoque', parseInt(productQuantity, 10));
-            if (productImage) {
-              formData.append('imagem', productImage);  // Adicionando a imagem ao FormData
-            }
-
-            $.ajax({
-              url: `http://localhost:3000/api/produtos/${productId}`,
-              type: 'PUT',
-              data: formData,
-              processData: false,  // Impede que o jQuery tente processar os dados
-              contentType: false,  // Impede que o jQuery defina o contentType automaticamente (deve ser multipart/form-data)
-              success: function () {
-                alert('Produto atualizado com sucesso!');
-                $('#editProductModal').addClass('hidden');
-                loadProducts();
-              },
-              error: function () {
-                alert('Erro ao atualizar o produto.');
-              }
-            });
-          });
-
-          // Excluir produto no banco de dados
-          $(document).on('click', '.deleteBtn', function () {
-            const productId = $(this).data('id');
-
-            if (confirm('Você tem certeza que deseja excluir este produto?')) {
-              $.ajax({
-                url: `http://localhost:3000/api/produtos/${productId}`,
-                type: 'DELETE',
-                success: function () {
-                  alert('Produto excluído com sucesso!');
-                  loadProducts();
-                },
-                error: function () {
-                  alert('Erro ao excluir o produto.');
-                }
-              });
-            }
-          });
-
-          // Fechar o modal de edição
-          $('#closeModal').on('click', function () {
-            $('#editProductModal').addClass('hidden');
-          });
         });
-      </script>
+      }
+
+
+      // Abrir modal de edição e preencher com dados
+      $(document).on('click', '.editBtn', function () {
+        const produto = $(this).data('produto');
+
+        // Preencher os campos do modal
+        $('#editProductId').val(produto.id_produto);
+        $('#editProductName').val(produto.nome_produto || '');
+        $('#editProductDescription').val(produto.descricao || '');
+        $('#editProductPrice').val(produto.preco || 0);
+        $('#editProductQuantity').val(produto.quantidade_estoque || 0);
+
+        // Atualizar a visualização da imagem no modal
+        const imageUrl = `http://localhost:3000${produto.imagem}`; // URL da imagem do produto
+        $('#currentImagePreview').attr('src', imageUrl);
+
+        // Limpar o campo de upload de imagem (opcional, depende da lógica de upload)
+        $('#editProductImage').val('');
+
+        // Exibir o modal
+        $('#editProductModal').removeClass('hidden');
+      });
+
+      // Fechar o modal ao clicar no botão "Cancelar"
+      $(document).on('click', '#cancelButton', function () {
+        $('#editProductModal').addClass('hidden');
+      });
+
+
+      // Atualizar produto no banco de dados
+      $('#editProductForm').on('submit', function (e) {
+        e.preventDefault();
+
+        const productId = $('#editProductId').val();
+        const productName = $('#editProductName').val();
+        const productDescription = $('#editProductDescription').val();
+        const productPrice = $('#editProductPrice').val();
+        const productQuantity = $('#editProductQuantity').val();
+        const productImage = $('#editProductImage')[0].files[0];  // Pegando o arquivo de imagem
+
+        if (!productName || !productDescription || !productPrice || !productQuantity) {
+          alert('Todos os campos são obrigatórios.');
+          return;
+        }
+
+        // FormData é usado para enviar dados de formulário com arquivos
+        const formData = new FormData();
+        formData.append('nome_produto', productName);
+        formData.append('descricao', productDescription);
+        formData.append('preco', parseFloat(productPrice));
+        formData.append('quantidade_estoque', parseInt(productQuantity, 10));
+        if (productImage) {
+          formData.append('imagem', productImage);  // Adicionando a imagem ao FormData
+        }
+
+        $.ajax({
+          url: `http://localhost:3000/api/produtos/${productId}`,
+          type: 'PUT',
+          data: formData,
+          processData: false,  // Impede que o jQuery tente processar os dados
+          contentType: false,  // Impede que o jQuery defina o contentType automaticamente (deve ser multipart/form-data)
+          success: function () {
+            alert('Produto atualizado com sucesso!');
+            $('#editProductModal').addClass('hidden');
+            loadProducts();
+          },
+          error: function () {
+            alert('Erro ao atualizar o produto.');
+          }
+        });
+      });
+
+      // Excluir produto no banco de dados
+      $(document).on('click', '.deleteBtn', function () {
+        const productId = $(this).data('id');
+
+        if (confirm('Você tem certeza que deseja excluir este produto?')) {
+          $.ajax({
+            url: `http://localhost:3000/api/produtos/${productId}`,
+            type: 'DELETE',
+            success: function () {
+              alert('Produto excluído com sucesso!');
+              loadProducts();
+            },
+            error: function () {
+              alert('Erro ao excluir o produto.');
+            }
+          });
+        }
+      });
+
+      // Fechar o modal de edição
+      $('#closeModal').on('click', function () {
+        $('#editProductModal').addClass('hidden');
+      });
+    });
+  });
+  </script>
 
 </body>
 

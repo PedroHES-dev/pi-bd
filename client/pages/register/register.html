@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Criar Conta</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@3.0.24/dist/tailwind.min.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-cover bg-center relative overflow-hidden" style="background-image: url('../login/img/fundo1.png');">
+  <!-- Centralização do Formulário -->
+  <div class="min-h-screen flex justify-center items-center bg-opacity-75">
+    <div class="w-full sm:w-96 rounded-lg bg-white shadow-lg shadow-yellow-600 p-6">
+      <!-- Título do Formulário -->
+      <h2 class="text-2xl font-bold text-center text-yellow-600 mb-6">Criar Conta</h2>
+
+      <!-- Ícone de Usuário -->
+      <div class="flex justify-center mb-3">
+        <img src="../login/img/user.png" alt="User Icon" class="w-16 h-16 rounded-full">
+      </div>
+
+      <!-- Formulário -->
+      <form id="registerForm">
+        <div class="mb-4">
+          <label class="block text-gray-700 text-sm font-semibold mb-2" for="name">
+            Nome Completo
+          </label>
+          <input 
+            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-yellow-500" 
+            id="name" 
+            name="nome_usuario" 
+            type="text" 
+            placeholder="Digite seu nome" 
+            required>
+        </div>
+
+        <div class="mb-4">
+          <label class="block text-gray-700 text-sm font-semibold mb-2" for="email">
+            E-mail
+          </label>
+          <input 
+            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-yellow-500" 
+            id="email" 
+            name="email" 
+            type="email" 
+            placeholder="Digite seu e-mail" 
+            required>
+        </div>
+
+        <div class="mb-4">
+          <label class="block text-gray-700 text-sm font-semibold mb-2" for="password">
+            Senha
+          </label>
+          <input 
+            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-yellow-500" 
+            id="password" 
+            name="senha" 
+            type="password" 
+            placeholder="Digite sua senha" 
+            required>
+        </div>
+
+        <div class="mb-4">
+          <label class="block text-gray-700 text-sm font-semibold mb-2" for="confirmPassword">
+            Confirmar Senha
+          </label>
+          <input 
+            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-yellow-500" 
+            id="confirmPassword" 
+            type="password" 
+            placeholder="Confirme sua senha" 
+            required>
+        </div>
+
+ <!-- Campo visível apenas para admins -->
+ <label for="role">Função</label>
+ <select id="role" name="role">
+     <option value="user">Usuário</option>
+     <option value="admin">Administrador</option>
+ </select>
+
+
+        <!-- Botão de Registro -->
+        <div class="flex items-center justify-between">
+          <button 
+            class="bg-yellow-600 hover:bg-yellow-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full transition duration-300 ease-in-out" 
+            type="submit">
+            Criar Conta
+          </button>
+        </div>
+      </form>
+
+      <!-- Link para login -->
+      <div class="text-center mt-4">
+        <p class="text-sm text-gray-600">Já tem uma conta? 
+          <a href="../login/login.html" class="text-yellow-600 hover:text-yellow-500">Faça login</a>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Script de integração com o back-end -->
+  <script>
+document.addEventListener('DOMContentLoaded', () => {
+  const token = localStorage.getItem('token'); // Supondo que você armazene o token no localStorage após o login
+
+  if (token) {
+    const decodedToken = jwt.decode(token); // Decodifica o token
+    if (decodedToken && decodedToken.role === 'admin') {
+      document.getElementById('role').disabled = false; // Habilita o campo de seleção para administradores
+    }
+  }
+});
+
+document.getElementById('registerForm').addEventListener('submit', async (event) => {
+  event.preventDefault();
+
+  const nome_usuario = document.getElementById('name').value;
+  const email = document.getElementById('email').value;
+  const senha = document.getElementById('password').value;
+
+  // Obtém o token JWT do localStorage
+  const token = localStorage.getItem('token');
+
+  if (!token) {
+    alert('Você precisa estar logado para criar uma conta.');
+    return;
+  }
+
+  try {
+    const response = await fetch('http://localhost:3000/api/usuarios/cadastro', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,  // Aqui estamos passando o token no cabeçalho Authorization
+      },
+      body: JSON.stringify({ nome_usuario, email, senha }),
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      alert('Conta criada com sucesso!');
+      window.location.href = '../login/login.html';
+    } else {
+      alert(data.message || 'Erro ao criar conta. Tente novamente.');
+    }
+  } catch (error) {
+    console.error('Erro:', error);
+    alert('Erro de conexão com o servidor. Tente novamente mais tarde.');
+  }
+});
+
+
+  </script>
+</body>
+</html>

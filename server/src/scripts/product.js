@@ -37,10 +37,14 @@ const upload = multer({
 
 // Rota para upload de produto com imagem
 router.post("/produtos", upload.single("imagem"), (req, res) => {
-  const { nome_produto, descricao, preco, quantidade_estoque, id_fornecedor } = req.body;
-  const imagem = req.file ? `/uploads/${req.file.filename}` : null;
+  console.log("Body recebido:", req.body);
+  console.log("Arquivo recebido:", req.file);
 
-  if (!nome_produto || !descricao || !preco || !quantidade_estoque || !id_fornecedor) {
+  const { nome_produto, descricao, preco, quantidade_estoque, id_fornecedor, id_categoria } = req.body;
+  const imagem = req.file ? `/uploads/${req.file.filename}` : null;
+  
+
+  if (!nome_produto || !descricao || !preco || !quantidade_estoque || !id_fornecedor || !id_categoria) {
     return res.status(400).send("Todos os campos são obrigatórios.");
   }
 
@@ -48,6 +52,7 @@ router.post("/produtos", upload.single("imagem"), (req, res) => {
     return res.status(400).send("É necessário enviar uma imagem do produto.");
   }
 
+  // Verifique se o fornecedor existe
   db.query("SELECT * FROM fornecedores WHERE id_fornecedor = ?", [id_fornecedor], (err, results) => {
     if (err) {
       console.error("Erro ao verificar fornecedor:", err);
@@ -58,21 +63,52 @@ router.post("/produtos", upload.single("imagem"), (req, res) => {
       return res.status(404).send("Fornecedor não encontrado.");
     }
 
-    db.query(
-      "INSERT INTO produtos (nome_produto, descricao, preco, quantidade_estoque, id_fornecedor, imagem) VALUES (?, ?, ?, ?, ?, ?)",
-      [nome_produto, descricao, parseFloat(preco), parseInt(quantidade_estoque, 10), id_fornecedor, imagem],
-      (err) => {
-        if (err) {
-          console.error("Erro ao cadastrar produto:", err);
-          return res.status(500).send("Erro ao cadastrar produto.");
-        }
-
-        res.status(201).send("Produto cadastrado com sucesso.");
+    // Verifique se a categoria existe
+    db.query("SELECT * FROM categorias WHERE id_categoria = ?", [id_categoria], (err, categoryResults) => {
+      if (err) {
+        console.error("Erro ao verificar categoria:", err);
+        return res.status(500).send("Erro no servidor.");
       }
-    );
+
+      if (categoryResults.length === 0) {
+        return res.status(404).send("Categoria não encontrada.");
+      }
+
+      // Inserir o produto no banco
+      db.query(
+        "INSERT INTO produtos (nome_produto, descricao, preco, quantidade_estoque, id_fornecedor, id_categoria, imagem) VALUES (?, ?, ?, ?, ?, ?, ?)",
+        [
+          nome_produto,
+          descricao,
+          parseFloat(preco),
+          parseInt(quantidade_estoque, 10),
+          id_fornecedor,
+          id_categoria,
+          imagem
+        ],
+        (err) => {
+          if (err) {
+            console.error("Erro ao cadastrar produto:", err);
+            return res.status(500).send("Erro ao cadastrar produto.");
+          }
+
+          res.status(201).send("Produto cadastrado com sucesso.");
+        }
+      );
+    });
   });
 });
 
+
+router.get('/categorias', (req, res) => {
+  db.query('SELECT id_categoria, nome_categoria FROM categorias', (err, results) => {
+    if (err) {
+      console.error('Erro ao buscar categorias:', err);
+      return res.status(500).send('Erro no servidor.');
+    }
+    res.json(results);
+  });
+});
 
 router.get('/fornecedores', (req, res) => {
   db.query('SELECT id_fornecedor, nome_fornecedor FROM fornecedores', (err, results) => {
@@ -90,15 +126,23 @@ router.get('/fornecedores', (req, res) => {
 router.get('/produtos', (req, res) => {
   const { search } = req.query;
   const sqlQuery = search
-    ? 'SELECT * FROM produtos WHERE nome_produto LIKE ?'
-    : 'SELECT * FROM produtos';
+    ? `SELECT p.*, c.nome_categoria, f.nome_fornecedor 
+       FROM produtos p
+       LEFT JOIN categorias c ON p.id_categoria = c.id_categoria
+       LEFT JOIN fornecedores f ON p.id_fornecedor = f.id_fornecedor
+       WHERE p.nome_produto LIKE ?`
+    : `SELECT p.*, c.nome_categoria, f.nome_fornecedor 
+       FROM produtos p
+       LEFT JOIN categorias c ON p.id_categoria = c.id_categoria
+       LEFT JOIN fornecedores f ON p.id_fornecedor = f.id_fornecedor`;
+
   const params = search ? [`%${search}%`] : [];
 
   db.query(sqlQuery, params, (err, results) => {
     if (err) {
       console.error('Erro ao buscar produtos:', err);
       return res.status(500).send('Erro no servidor');
-    } 
+    }
     res.json(results);
   });
 });
@@ -158,7 +202,7 @@ router.put('/produtos/:id', upload.single("imagem"), (req, res) => {
       return res.status(404).send('Produto não encontrado');
     }
 
-    const { id_categoria, id_fornecedor, imagem: imagemAntiga } = results[0];
+    const { imagem: imagemAntiga } = results[0];
 
     // Se uma nova imagem foi enviada, atualizar a imagem. Caso contrário, manter a imagem antiga
     const novaImagem = imagem || imagemAntiga;

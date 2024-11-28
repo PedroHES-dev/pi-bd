@@ -24,41 +24,46 @@
 <body class="overflow-x-hidden">
   <div class="flex flex-col sm:flex-row h-screen">
 
-    <!-- Barra Lateral (Menu) -->
-    <aside class="bg-primary text-white w-64 h-screen fixed top-0 left-0 p-6 hidden sm:block">
-      <ul class="space-y-6">
-        <!-- Dashboard -->
-        <li class="flex items-center space-x-3">
-          <span class="material-icons">dashboard</span>
-          <a href="../index.html" class="block hover:text-gray-300">Dashboard</a>
-        </li>
-        <!-- Produtos -->
-        <li class="flex items-center space-x-3">
-          <span class="material-icons">inventory_2</span>
-          <a href="../product/product.html" class="block hover:text-gray-300">Produtos</a>
-        </li>
-        <!-- Gráficos -->
-        <li class="flex items-center space-x-3">
-          <span class="material-icons">bar_chart</span>
-          <a href="graph.html" class="block hover:text-gray-300">Gráficos</a>
-        </li>
-        <!-- Relatórios -->
-        <li class="flex items-center space-x-3">
-          <span class="material-icons">description</span>
-          <a href="#" class="block hover:text-gray-300">Relatórios</a>
-        </li>
-        <!-- Configurações -->
-        <li class="flex items-center space-x-3">
-          <span class="material-icons">settings</span>
-          <a href="#" class="block hover:text-gray-300">Configurações</a>
-        </li>
-        <!-- Sair -->
-        <li class="absolute bottom-5 flex items-center space-x-3">
-          <span class="material-icons">logout</span>
-          <a href="#" class="block hover:text-gray-300">Sair</a>
-        </li>
-      </ul>
-    </aside>
+        <!-- Menu Lateral -->
+        <aside class="bg-primary text-white w-64 h-screen fixed top-0 left-0 p-6 hidden sm:block">
+          <ul class="space-y-6">
+    
+            <!-- Perfil do Usuário -->
+            <li class="flex items-center space-x-3">
+              <img src="../login/img/user.png" alt="Foto de Perfil" class="w-8 h-8 rounded-full"> <!-- Foto do Usuário -->
+              <span class="text-red-700">Pedro Eulalio</span> <!-- Nome do Usuário -->
+            </li>
+            <!-- Produtos -->
+            <li class="flex items-center space-x-3">
+              <span class="material-icons">inventory_2</span>
+              <a href="../product/product.html" class="block hover:text-gray-300">Produtos</a>
+            </li>
+    
+            <!-- Gráficos -->
+            <li class="flex items-center space-x-3">
+              <span class="material-icons">bar_chart</span>
+              <a href="../graph/graph.html" class="block hover:text-gray-300">Gráficos</a>
+            </li>
+    
+            <!-- Histórico de Baixa -->
+            <li class="flex items-center space-x-3">
+              <span class="material-icons">history</span> <!-- Ícone de Histórico -->
+              <a href="#" class="block hover:text-gray-300">Histórico</a>
+            </li>
+    
+            <!-- Relatórios -->
+            <li class="flex items-center space-x-3">
+              <span class="material-icons">description</span>
+              <a href="#" class="block hover:text-gray-300">Relatórios</a>
+            </li>
+    
+            <!-- Sair -->
+            <li class="absolute bottom-5 flex items-center space-x-3">
+              <span class="material-icons">logout</span>
+              <a href="../login/login.html" class="block hover:text-gray-300">Sair</a>
+            </li>
+          </ul>
+        </aside>
 
     <!-- Conteúdo Principal -->
     <main class="flex-grow sm:ml-64 bg-gray-100 pb-16 overflow-y-auto">
@@ -138,27 +143,36 @@
 
   <!-- Barra Inferior -->
   <div class="bg-primary text-white fixed bottom-0 left-0 w-full flex justify-around p-3 sm:hidden">
-    <a href="../index.html" class="flex flex-col items-center hover:text-gray-300">
-      <span class="material-icons">dashboard</span>
-      <span class="text-xs">Dashboard</span>
-    </a>
-    <a href="#" class="flex flex-col items-center hover:text-gray-300">
-      <span class="material-icons">inventory</span>
-      <span class="text-xs">Produtos</span>
-    </a>
-    <a href="#" class="flex flex-col items-center hover:text-gray-300">
-      <span class="material-icons">bar_chart</span>
-      <span class="text-xs">Gráficos</span>
-    </a>
-    <a href="#" class="flex flex-col items-center hover:text-gray-300">
-      <span class="material-icons">settings</span>
-      <span class="text-xs">Configurações</span>
-    </a>
-    <a href="#" class="flex flex-col items-center hover:text-gray-300">
-      <span class="material-icons">logout</span>
-      <span class="text-xs">Sair</span>
-    </a>
-  </div>
+      <!-- Produto -->
+      <a href="../product/product.html" class="flex flex-col items-center hover:text-gray-300">
+        <span class="material-icons">inventory</span>
+        <span class="text-xs">Produto</span>
+      </a>
+  
+      <!-- Gráfico -->
+      <a href="#" class="flex flex-col items-center hover:text-gray-300">
+        <span class="material-icons">bar_chart</span>
+        <span class="text-xs">Gráfico</span>
+      </a>
+  
+      <!-- "+" (Botão de Adicionar) -->
+      <a href="#"
+        class="flex flex-col items-center justify-center w-14 h-14 rounded-full bg-yellow-600 text-white hover:bg-yellow-500">
+        <span class="material-icons text-3xl">camera_alt</span>
+      </a>
+  
+      <!-- Relatório -->
+      <a href="#" class="flex flex-col items-center hover:text-gray-300">
+        <span class="material-icons">description</span>
+        <span class="text-xs">Relatório</span>
+      </a>
+  
+      <!-- Sair -->
+      <a href="../login/login.html" class="flex flex-col items-center hover:text-gray-300">
+        <span class="material-icons">logout</span>
+        <span class="text-xs">Sair</span>
+      </a>
+    </div>
 </body>
 
 </html>

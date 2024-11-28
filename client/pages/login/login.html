@@ -6,7 +6,7 @@
     <title>Login</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.0.24/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
-	<link rel="stylesheet" href="login.css" rel="stylesheet">
+    <link rel="stylesheet" href="login.css" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-cover bg-center relative overflow-hidden" style="background-image: url('img/fundo1.png.png');">
@@ -30,7 +30,7 @@
         <!-- Right Login Form Section -->
         <div class="w-full sm:w-1/2 flex justify-center items-center px-4 sm:px-8">
             <div class="w-full max-w-md p-6 rounded-lg bg-white shadow-lg shadow-yellow-600">
-                <form action="index.html" class="space-y-6">
+                <form id="loginForm" action="#" method="POST" class="space-y-6">
                     <div class="flex justify-center mb-4">
                         <img src="img/user.png" alt="User Icon" class="w-16 h-16 rounded-full">
                     </div>
@@ -39,20 +39,15 @@
 
                     <div class="input-div mb-6 flex items-center border-b-2 border-gray-300 focus-within:border-yellow-500">
                         <i class="fas fa-user text-gray-500 mr-4"></i>
-                        <input type="text" class="input w-full p-4 text-lg focus:outline-none" placeholder="Usuário">
+                        <input type="text" class="input w-full p-4 text-lg focus:outline-none" placeholder="Usuário" required>
                     </div>
 
                     <div class="input-div mb-6 flex items-center border-b-2 border-gray-300 focus-within:border-yellow-500">
                         <i class="fas fa-lock text-gray-500 mr-4"></i>
-                        <input type="password" class="input w-full p-4 text-lg focus:outline-none" placeholder="Senha">
+                        <input type="password" class="input w-full p-4 text-lg focus:outline-none" placeholder="Senha" required>
                     </div>
 
                     <a href="#" class="text-sm text-yellow-600 hover:text-yellow-500">Esqueceu a senha?</a>
-
-                    <div class="text-center my-6">
-                        <h4 class="text-gray-700">Novo Usuário</h4>
-                        <a href="#" class="text-yellow-600 hover:text-yellow-500">Clique aqui!</a>
-                    </div>
 
                     <button type="submit" class="w-full py-3 bg-yellow-600 text-white rounded-full text-lg font-semibold hover:bg-yellow-500 transition duration-300 ease-in-out">
                         Login
@@ -61,8 +56,5 @@
             </div>
         </div>
     </div>
-
-    <script src="login.js"></script>
-
 </body>
 </html>
