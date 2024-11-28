@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard de Vendas de Produto</title>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#1a202c',
+            secondary: '#4a5568',
+          }
+        }
+      }
+    };
+  </script>
+</head>
+
+<body class="overflow-x-hidden">
+  <div class="flex flex-col sm:flex-row h-screen">
+
+    <!-- Menu Lateral -->
+    <aside class="bg-primary text-white w-64 h-screen fixed top-0 left-0 p-6 hidden sm:block">
+      <ul class="space-y-6">
+        <!-- Perfil do Usuário -->
+        <li class="flex items-center space-x-3">
+          <img src="../login/img/user.png" alt="Foto de Perfil" class="w-8 h-8 rounded-full"> <!-- Foto do Usuário -->
+          <span class="text-red-700">Pedro Eulalio</span> <!-- Nome do Usuário -->
+        </li>
+        <!-- Produtos -->
+        <li class="flex items-center space-x-3">
+          <span class="material-icons">inventory_2</span>
+          <a href="../product/product.html" class="block hover:text-gray-300">Produtos</a>
+        </li>
+
+        <!-- Gráficos -->
+        <li class="flex items-center space-x-3">
+          <span class="material-icons">bar_chart</span>
+          <a href="../graph/graph.html" class="block hover:text-gray-300">Gráficos</a>
+        </li>
+
+        <!-- Histórico de Baixa -->
+        <li class="flex items-center space-x-3">
+          <span class="material-icons">history</span> <!-- Ícone de Histórico -->
+          <a href="#" class="block hover:text-gray-300">Histórico</a>
+        </li>
+
+        <!-- Relatórios -->
+        <li class="flex items-center space-x-3">
+          <span class="material-icons">description</span>
+          <a href="#" class="block hover:text-gray-300">Relatórios</a>
+        </li>
+
+        <!-- Sair -->
+        <li class="absolute bottom-5 flex items-center space-x-3">
+          <span class="material-icons">logout</span>
+          <a href="../login/login.html" class="block hover:text-gray-300">Sair</a>
+        </li>
+      </ul>
+    </aside>
+
+    <!-- Conteúdo Principal -->
+    <main class="flex-grow sm:ml-64 bg-gray-100 pb-16 overflow-y-auto">
+      <section class="p-6">
+        <h1 class="text-2xl font-semibold mb-6">Registrar Venda de Produto</h1>
+
+        <!-- Formulário de Venda -->
+        <form id="saleForm" action="#" method="POST" class="space-y-6">
+          <div>
+            <label for="id_produto" class="block text-sm font-medium text-gray-700">ID do Produto</label>
+            <input type="number" id="id_produto" name="id_produto" required class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-primary focus:border-primary" placeholder="ID do produto">
+          </div>
+
+          <div>
+            <label for="quantidade" class="block text-sm font-medium text-gray-700">Quantidade</label>
+            <input type="number" id="quantidade" name="quantidade" required class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-primary focus:border-primary" placeholder="Quantidade">
+          </div>
+
+          <button type="submit" id="submitSale" class="w-full py-2 px-4 bg-green-500 text-white rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400">Registrar Venda</button>
+        </form>
+
+        <div class="mt-8">
+          <h2 class="text-xl font-semibold mb-4">Registrar Venda via QR Code</h2>
+          <label for="qrCodeInput" class="block text-sm font-medium text-gray-700">Escaneie o QR Code ou cole os dados</label>
+          <input type="text" id="qrCodeInput" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-primary focus:border-primary" placeholder="Dados do QR Code">
+          
+          <button id="submitQRCode" class="mt-4 w-full py-2 px-4 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400">Registrar Venda via QR Code</button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Barra Inferior -->
+  <div class="bg-primary text-white fixed bottom-0 left-0 w-full flex justify-around p-3 sm:hidden">
+    <!-- Produto -->
+    <a href="../product/product.html" class="flex flex-col items-center hover:text-gray-300">
+      <span class="material-icons">inventory</span>
+      <span class="text-xs">Produto</span>
+    </a>
+
+    <!-- Gráfico -->
+    <a href="#" class="flex flex-col items-center hover:text-gray-300">
+      <span class="material-icons">bar_chart</span>
+      <span class="text-xs">Gráfico</span>
+    </a>
+
+    <!-- "+" (Botão de Adicionar) -->
+    <a href="#" class="flex flex-col items-center justify-center w-14 h-14 rounded-full bg-yellow-600 text-white hover:bg-yellow-500">
+      <span class="material-icons text-3xl">camera_alt</span>
+    </a>
+
+    <!-- Relatório -->
+    <a href="#" class="flex flex-col items-center hover:text-gray-300">
+      <span class="material-icons">description</span>
+      <span class="text-xs">Relatório</span>
+    </a>
+
+    <!-- Sair -->
+    <a href="../login/login.html" class="flex flex-col items-center hover:text-gray-300">
+      <span class="material-icons">logout</span>
+      <span class="text-xs">Sair</span>
+    </a>
+  </div>
+
+  <script>
+    // Função para registrar a venda
+    document.getElementById('saleForm').addEventListener('submit', function (event) {
+      event.preventDefault();
+
+      const id_produto = document.getElementById('id_produto').value;
+      const quantidade = document.getElementById('quantidade').value;
+
+      // Enviar dados da venda para a API
+      fetch('http://localhost:3000/api/vendas/registrar', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id_produto: id_produto, quantidade: quantidade })
+      })
+      .then(response => response.json())
+      .then(data => alert('Venda registrada com sucesso!'))
+      .catch(error => alert('Erro ao registrar venda: ' + error));
+    });
+
+    // Função para registrar a venda via QR Code
+    document.getElementById('submitQRCode').addEventListener('click', function () {
+      const qrCodeData = document.getElementById('qrCodeInput').value;
+
+      // Enviar dados do QR Code para a API
+      fetch('http://localhost:3000/api/vendas/qr-code', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ qrCodeData: qrCodeData })
+      })
+      .then(response => response.json())
+      .then(data => alert('Venda via QR Code registrada com sucesso!'))
+      .catch(error => alert('Erro ao registrar venda via QR Code: ' + error));
+    });
+  </script>
+</body>
+
+</html>

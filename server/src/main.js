@@ -1,3 +1,4 @@
+// main.js
 import express from 'express';
 import cors from 'cors';
 import path from 'path';
@@ -6,7 +7,7 @@ import { fileURLToPath } from 'url';  // Importar fileURLToPath para resolver o 
 import { productRouter } from './scripts/product.js';
 import { userRouter } from '../src/routes/userRoutes.js'; // Importa o roteador de usuários
 import { authRouter } from '../src/routes/authRoutes.js';
-
+import salesRouter from '../src/routes/salesRoutes.js'; // Rota de vendas
 
 // Resolver o diretório atual com import.meta.url
 const __filename = fileURLToPath(import.meta.url);
@@ -36,6 +37,7 @@ app.use("/api", productRouter);
 app.use('/uploads', express.static(uploadsDir));
 app.use("/api/usuarios", userRouter);
 app.use('/api/auth', authRouter);
+app.use("/api", salesRouter); // Rota de vendas
 
 // Garantir que o diretório "uploads" seja criado antes de iniciar o servidor
 ensureUploadsDirectory().then(() => {
