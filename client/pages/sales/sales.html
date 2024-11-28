@@ -91,6 +91,23 @@
           
           <button id="submitQRCode" class="mt-4 w-full py-2 px-4 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400">Registrar Venda via QR Code</button>
         </div>
+         <!-- Histórico de Vendas -->
+         <div class="mt-12">
+            <h2 class="text-xl font-semibold mb-4">Histórico de Vendas</h2>
+            <table class="table-auto w-full bg-white shadow-lg rounded-lg overflow-hidden">
+              <thead class="bg-gray-200">
+                <tr>
+                  <th class="p-3 text-left">Produto</th>
+                  <th class="p-3 text-left">Descrição</th>
+                  <th class="p-3 text-left">Quantidade</th>
+                  <th class="p-3 text-left">Preço Unitário</th>
+                  <th class="p-3 text-left">Total</th>
+                  <th class="p-3 text-left">Data da Venda</th>
+                </tr>
+              </thead>
+              <tbody id="sales-history"></tbody>
+            </table>
+          </div>
       </section>
     </main>
   </div>
@@ -129,37 +146,78 @@
 
   <script>
     // Função para registrar a venda
-    document.getElementById('saleForm').addEventListener('submit', function (event) {
-      event.preventDefault();
+// Função para registrar a venda
+document.getElementById('saleForm').addEventListener('submit', function (event) {
+  event.preventDefault();
 
-      const id_produto = document.getElementById('id_produto').value;
-      const quantidade = document.getElementById('quantidade').value;
+  const id_produto = document.getElementById('id_produto').value;
+  const quantidade = document.getElementById('quantidade').value;
 
-      // Enviar dados da venda para a API
-      fetch('http://localhost:3000/api/vendas/registrar', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id_produto: id_produto, quantidade: quantidade })
-      })
-      .then(response => response.json())
-      .then(data => alert('Venda registrada com sucesso!'))
-      .catch(error => alert('Erro ao registrar venda: ' + error));
-    });
+  // Enviar dados da venda para a API
+  fetch('http://localhost:3000/api/vendas/registrar', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ id_produto: id_produto, quantidade: quantidade })
+  })
+  .then(response => response.json())
+  .then(data => {
+    alert('Venda registrada com sucesso!');
+    loadSalesHistory(); // Atualiza o histórico de vendas após uma nova venda
+  })
+  .catch(error => alert('Erro ao registrar venda: ' + error));
+});
 
-    // Função para registrar a venda via QR Code
-    document.getElementById('submitQRCode').addEventListener('click', function () {
-      const qrCodeData = document.getElementById('qrCodeInput').value;
 
-      // Enviar dados do QR Code para a API
-      fetch('http://localhost:3000/api/vendas/qr-code', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ qrCodeData: qrCodeData })
-      })
-      .then(response => response.json())
-      .then(data => alert('Venda via QR Code registrada com sucesso!'))
-      .catch(error => alert('Erro ao registrar venda via QR Code: ' + error));
-    });
+// Função para registrar a venda via QR Code
+document.getElementById('submitQRCode').addEventListener('click', function () {
+  const qrCodeData = document.getElementById('qrCodeInput').value;
+
+  // Enviar dados do QR Code para a API
+  fetch('http://localhost:3000/api/vendas/qr-code', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ qrCodeData: qrCodeData })
+  })
+  .then(response => response.json())
+  .then(data => {
+    alert('Venda via QR Code registrada com sucesso!');
+    loadSalesHistory(); // Atualiza o histórico de vendas após o registro via QR Code
+  })
+  .catch(error => alert('Erro ao registrar venda via QR Code: ' + error));
+});
+
+// Função para carregar o histórico de vendas
+function loadSalesHistory() {
+  fetch('http://localhost:3000/api/vendas/historico')
+    .then(response => response.json())
+    .then(data => {
+      const historyElement = document.getElementById('sales-history');
+      historyElement.innerHTML = ''; // Limpar tabela antes de adicionar dados
+
+      data.salesHistory.forEach(sale => {
+        const precoUnitario = parseFloat(sale.preco_unitario) || 0;  // Converter para número
+        const total = parseFloat(sale.total) || 0;  // Converter para número
+
+        const row = document.createElement('tr');
+        row.className = "border-b border-gray-200";
+        row.innerHTML = `
+          <td class="p-3">${sale.nome_produto}</td>
+          <td class="p-3">${sale.descricao}</td>
+          <td class="p-3">${sale.quantidade}</td>
+          <td class="p-3">R$ ${precoUnitario.toFixed(2)}</td>
+          <td class="p-3">R$ ${total.toFixed(2)}</td>
+          <td class="p-3">${new Date(sale.data_venda).toLocaleString()}</td>
+        `;
+        historyElement.appendChild(row);
+      });
+    })
+    .catch(error => console.error('Erro ao carregar histórico de vendas:', error));
+}
+
+// Carregar o histórico ao carregar a página
+document.addEventListener('DOMContentLoaded', loadSalesHistory);
+
+
   </script>
 </body>
 

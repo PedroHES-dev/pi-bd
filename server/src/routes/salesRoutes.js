@@ -1,14 +1,12 @@
 import express from "express";
-import { registerSale, processQRCodeForSale } from "../controllers/salesController.js";
+import { registerSale, getSalesHistory } from "../controllers/salesController.js";
 
-// Criando a instância do roteador com um nome mais descritivo
-const salesRoutes = express.Router();
+const salesRouter = express.Router();
 
-// Rota para registrar uma venda e descontar do estoque
-salesRoutes.post("/vendas/registrar", registerSale);
+// Rota para registrar uma venda
+salesRouter.post("/vendas/registrar", registerSale);
 
-// Rota para processar o QR code e registrar a venda
-salesRoutes.post("/vendas/qr-code", processQRCodeForSale);
+// Rota para obter o histórico de vendas
+salesRouter.get("/vendas/historico", getSalesHistory);
 
-// Exportando o roteador com o novo nome
-export default salesRoutes;
+export default salesRouter;
